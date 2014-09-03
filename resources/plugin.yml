@@ -1,0 +1,8 @@
+name: Limbo
+main: us.corenetwork.limbo.LimboPlugin
+version: 0.1
+author: eliadil
+commands:
+    lim:
+        description: Main limbo command
+load: STARTUP

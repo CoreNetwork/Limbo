@@ -1,6 +1,7 @@
 package us.corenetwork.limbo;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 
 public class Logs
 {
@@ -18,16 +19,16 @@ public class Logs
 	
 	public static void info(String text)
 	{
-		Bukkit.getLogger().info("[Limbo] " + text);
+		Bukkit.getLogger().info(ChatColor.GOLD + "[Limbo] " + ChatColor.GRAY + text);
 	}
 	
 	public static void warning(String text)
 	{
-		Bukkit.getLogger().warning("[Limbo] " + text);
+		Bukkit.getLogger().warning(ChatColor.GOLD + "[Limbo] " + ChatColor.GRAY + text);
 	}
 	
 	public static void severe(String text)
 	{
-		Bukkit.getLogger().severe("[Limbo] " + text);
+		Bukkit.getLogger().severe(ChatColor.GOLD + "[Limbo] " + ChatColor.GRAY + text);
 	}
 }

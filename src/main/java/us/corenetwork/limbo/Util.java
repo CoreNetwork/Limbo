@@ -1,6 +1,10 @@
 package us.corenetwork.limbo;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -91,4 +95,109 @@ public class Util {
 			return false;
 		}
 	}
+	
+	public static long currentTime()
+	{
+		return (new Date()).getTime();
+	}
+	
+	//Parsing 50m or 1h or 10s to ticks
+	//If letter is omitted, treating it like minutes
+	public static long parseTimeToMilis(String time)
+	{
+		int timeInt;
+		int multip;
+		
+		switch (time.charAt(time.length()-1))
+		{
+		case 'h':
+			multip = 3600000;
+			break;
+		case 'm':
+			multip = 60000;
+			break;
+		case 's':
+			multip = 1000;
+			break;
+			
+		default://default is m
+			if(isInteger(time))
+			{
+				multip = 60000;
+				timeInt = Integer.parseInt(time);
+				return timeInt * multip;
+			}
+			else
+			{
+				throw new IllegalArgumentException("Wrong time syntax! " + time);
+			}
+		}
+		
+		if(isInteger(time.substring(0, time.length()-1)))
+		{
+			timeInt = Integer.parseInt(time.substring(0, time.length()-1));
+			return timeInt * multip;
+		}
+		else
+		{
+			throw new IllegalArgumentException("Wrong time syntax! " + time);
+		}
+	}
+
+	public static boolean isCorrectTimeFormat(String time)
+	{
+		if(time.length() == 0)
+			return false;
+		
+		if(isInteger(time))
+			return true;
+		
+		char c = time.charAt(time.length() - 1);
+		String sTime = time.substring(1, time.length()-1);
+		
+		if(c == 's' || c == 'h' || c == 'm')
+		{
+			return isInteger(sTime);
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	
+	public static List<String> PrepareCommands(List<String> commands, HashMap<String, String> hashMap)
+	{
+		List<String> newCommands = new ArrayList<String>();
+		for(String command : commands)
+		{
+			for(Entry<String, String> entry : hashMap.entrySet())
+			{
+				command = command.replace(entry.getKey(), entry.getValue());
+			}
+			newCommands.add(command);
+		}
+		return newCommands;
+	}
+	
+	public static void RunCommands(List<String> commands)
+	{
+		for(String command : commands)
+		{
+			LimboPlugin.instance.getServer().dispatchCommand(LimboPlugin.instance.getServer().getConsoleSender(), command);
+		}
+	}
+
+	public static String getDetailedTimeMessage(long time)
+	{
+		String timeMessage;
+		long minutesLeft = time / 1000 / 60;
+		long secondsLeft = (time / 1000) % 60;
+		
+		timeMessage = Settings.MESSAGE_TIME_DETAILED.string();
+		timeMessage = timeMessage.replace("<Minutes>", minutesLeft+"");
+		timeMessage = timeMessage.replace("<Seconds>", secondsLeft+"");
+		return timeMessage;
+	}
+
 }

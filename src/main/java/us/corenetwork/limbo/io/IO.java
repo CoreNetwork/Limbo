@@ -1,4 +1,4 @@
-package us.corenetwork.limbo;
+package us.corenetwork.limbo.io;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,6 +10,8 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
+import us.corenetwork.limbo.LimboPlugin;
+import us.corenetwork.limbo.Settings;
 
 public class IO {
 	public static YamlConfiguration config;
@@ -94,9 +96,24 @@ public class IO {
             conn = IO.getConnection();
             st = conn.createStatement();
             st.executeUpdate("CREATE TABLE IF NOT EXISTS prisoners "
-            		+ "(UUID STRING NOT NULL, StartTime INTEGER NOT NULL, Duration INTEGER, PRIMARY KEY(UUID, StartTime))");
+            		+ "(UUID STRING NOT NULL, "
+            		+ "StartTime INTEGER NOT NULL, "
+            		+ "Duration INTEGER, "
+            		+ "ToRelease INTEGER, "
+            		+ "SpawnedOnce INTEGER, "
+            		+ "Challenge INTEGER, "
+            		+ "ChallengeStartTime INTEGER, "
+            		+ "PRIMARY KEY(UUID))");
             st.executeUpdate("CREATE TABLE IF NOT EXISTS deaths "
-            		+ "(UUID STRING NOT NULL, DeathTime INTEGER NOT NULL, DeathMessage STRING, PRIMARY KEY(UUID, DeathTime))");
+            		+ "(UUID STRING NOT NULL, "
+            		+ "DeathTime INTEGER NOT NULL, "
+            		+ "DeathMessage STRING, "
+            		+ "PRIMARY KEY(UUID, DeathTime))");
+            st.executeUpdate("CREATE TABLE IF NOT EXISTS records "
+            		+ "(UUID STRING NOT NULL, "
+            		+ "Challenge STRING NOT NULL, "
+            		+ "DURATION INTEGER"
+            		+ ")");
             conn.commit();
             st.close();
         } catch (SQLException e) {

@@ -7,8 +7,17 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import us.corenetwork.limbo.commands.AbstractLimboCommand;
+import us.corenetwork.limbo.commands.CheckCommand;
+import us.corenetwork.limbo.commands.DecreaseCommand;
+import us.corenetwork.limbo.commands.EnterChallengeCommand;
+import us.corenetwork.limbo.commands.ExitChallengeCommand;
+import us.corenetwork.limbo.commands.FinishChallengeCommand;
+import us.corenetwork.limbo.commands.IncreaseCommand;
 import us.corenetwork.limbo.commands.LimboHelpCommand;
+import us.corenetwork.limbo.commands.ReleaseCommand;
 import us.corenetwork.limbo.commands.ReloadCommand;
+import us.corenetwork.limbo.commands.StatusCommand;
+import us.corenetwork.limbo.io.IO;
 
 public class LimboPlugin extends JavaPlugin {
 	public static LimboPlugin instance;
@@ -24,6 +33,16 @@ public class LimboPlugin extends JavaPlugin {
 		
 		limboCommands.put("help", new LimboHelpCommand());
 		limboCommands.put("reload", new ReloadCommand());
+		limboCommands.put("check", new CheckCommand());
+		limboCommands.put("status", new StatusCommand());
+		limboCommands.put("release", new ReleaseCommand());
+		limboCommands.put("increase", new IncreaseCommand());
+		limboCommands.put("decrease", new DecreaseCommand());
+		limboCommands.put("enter", new EnterChallengeCommand());
+		limboCommands.put("exit", new ExitChallengeCommand());
+		limboCommands.put("finish", new FinishChallengeCommand());
+		
+		
 		
 		IO.LoadSettings();
 		IO.PrepareDB();

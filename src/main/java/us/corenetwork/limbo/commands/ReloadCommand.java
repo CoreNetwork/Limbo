@@ -1,9 +1,9 @@
 package us.corenetwork.limbo.commands;
 
 import org.bukkit.command.CommandSender;
-import us.corenetwork.limbo.IO;
 import us.corenetwork.limbo.Settings;
 import us.corenetwork.limbo.Util;
+import us.corenetwork.limbo.io.IO;
 
 public class ReloadCommand extends BaseLimboCommand {
 

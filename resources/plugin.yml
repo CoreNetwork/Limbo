@@ -5,4 +5,3 @@ author: eliadil
 commands:
     lim:
         description: Main limbo command
-load: STARTUP

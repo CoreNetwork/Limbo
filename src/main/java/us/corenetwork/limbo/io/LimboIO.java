@@ -56,6 +56,8 @@ public class LimboIO {
 			e.printStackTrace();
 		}
 		
+		if(death == null)
+			death = new Death(player.getUniqueId().toString(), 0, "");
 		return death;
 	}
 	

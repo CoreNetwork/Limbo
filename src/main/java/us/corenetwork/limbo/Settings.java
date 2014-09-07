@@ -58,9 +58,10 @@ public enum Settings {
 	MESSAGE_TIME_DETAILED("Messages.DetailedTimeSyntax", "<Minutes>m <Seconds>s"),
 	
 	MESSAGE_ENTRY("Messages.Entry", new ArrayList<String>(){{add("&bYour death erased your corporeal form and all possessions. &7You will linger in &fLimbo &7for &f<Time>&7.");
-	add("&3Reason: <Death>");}}),
+	}}),
 	MESSAGE_EXIT("Messages.Exit", "&bYou have been released from Limbo."),
 	MESSAGE_DEATH_RESPAWN("Messages.DeathRespawn", "&bYour incorporeal form cannot be damaged."),
+	MESSAGE_DEATH_REASON("Messages.DeathReason", "&bYour death: <Death>."),
 	MESSAGE_NOTIFICATION("Messages.Notification", "&bRemaining time: <Time>"),
 	MESSAGE_NOTIFICATION_ON("Messages.NotificationOn", "Notifications ON!"),
 	MESSAGE_NOTIFICATION_OFF("Messages.NotificationOff", "Notifications OFF!"),

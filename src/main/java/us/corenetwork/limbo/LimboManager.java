@@ -3,6 +3,7 @@ package us.corenetwork.limbo;
 import java.util.HashMap;
 import java.util.List;
 import org.bukkit.entity.Player;
+import us.corenetwork.limbo.io.Death;
 import us.corenetwork.limbo.io.LimboIO;
 import us.corenetwork.limbo.io.Prisoner;
 import us.corenetwork.limbo.io.Prisoners;
@@ -20,9 +21,11 @@ public class LimboManager {
 	{
 		Util.RunCommands(Util.PrepareCommands(Settings.COMMANDS_ON_ENTRY.stringList(), new HashMap<String, String>(){{put("<Player>", player.getName());}}));
 		List<String> msgList = Settings.MESSAGE_ENTRY.stringList();
+		Death death = LimboIO.getLastDeath(player);
+		
 		for(String msg : msgList)
 		{
-			Util.Message(msg.replace("<Time>", Util.getSimpleTimeMessage(LimboManager.getMilisLeft(player))).replace("<Death>", "LOO death message"), player);
+			Util.Message(msg.replace("<Time>", Util.getSimpleTimeMessage(LimboManager.getMilisLeft(player))).replace("<Death>", death.deathMessage), player);
 		}
 		
 	}
@@ -51,6 +54,11 @@ public class LimboManager {
 			moveIn(player);
 			prisoner.spawnedOnce = true;
 			Prisoners.save(prisoner);
+			if(Util.currentTime() - prisoner.startTime > 1000*10)
+			{
+				Death death = LimboIO.getLastDeath(player);
+				Util.Message(Settings.MESSAGE_DEATH_REASON.string().replace("<Death>", death.deathMessage), player);
+			}
 		}
 		else
 		{

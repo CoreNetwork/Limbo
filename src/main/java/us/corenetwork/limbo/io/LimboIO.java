@@ -8,11 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 import org.bukkit.entity.Player;
 import us.corenetwork.limbo.Logs;
-import us.corenetwork.limbo.Util;
 
 public class LimboIO {
 
-	public static void saveDeath(String uuid, long deathTime, String deathMessage)
+	public static void insertDeath(Death death)
 	{
 		try 
 		{
@@ -20,9 +19,9 @@ public class LimboIO {
 			
 			PreparedStatement statement = conn.prepareStatement("INSERT INTO deaths (UUID, DeathTime, DeathMessage) VALUES (?,?,?)");
 			
-			statement.setString(1, uuid);
-			statement.setLong(2, deathTime);
-			statement.setString(3, deathMessage);
+			statement.setString(1, death.uuid);
+			statement.setLong(2, death.deathTime);
+			statement.setString(3, death.deathMessage);
 			
 			statement.execute();
 			statement.close();
@@ -32,6 +31,34 @@ public class LimboIO {
 			e.printStackTrace();
 		}
 	}
+	
+
+	public static Death getLastDeath(Player player)
+	{
+		Death death = null;
+		try 
+		{
+			Connection conn = IO.getConnection();
+			
+			PreparedStatement statement = conn.prepareStatement("SELECT UUID, DeathTime, DeathMessage FROM deaths WHERE UUID = ? ORDER BY DeathTime DESC");
+			statement.setString(1, player.getUniqueId().toString());
+						
+			ResultSet rs = statement.executeQuery();
+			if(rs.next())
+			{
+				death = new Death(rs.getString(1), rs.getLong(2), rs.getString(3));
+			}
+			
+			statement.close();
+			conn.commit();
+		} catch (SQLException e) {
+			Logs.severe("Error while retrieving death to the database !");
+			e.printStackTrace();
+		}
+		
+		return death;
+	}
+	
 	
 	public static List<Prisoner> getPrisoners()
 	{
@@ -242,4 +269,5 @@ public class LimboIO {
 		
 		return count;
 	}
+
 }

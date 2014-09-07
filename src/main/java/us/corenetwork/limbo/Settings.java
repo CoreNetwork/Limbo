@@ -9,7 +9,7 @@ public enum Settings {
 	DEBUG("Debug", false),
 	
 	DEFAULT_DURATION("DefaultDuration", "60m"),
-	NOTIFICATION_TIMES("NotificationTimes", new Integer[]{10, 20, 30, 40, 50, 55}),
+	NOTIFICATION_TIMES_LEFT("NotificationTimesLeft", new Integer[]{50, 40, 30, 20, 10, 5, 4, 3, 2, 1}),
 	
 	COMMANDS_ON_ENTRY("Limbo.CommandsOnEntry", new ArrayList<String>(){{
 		add("rspawn unprotect silent");

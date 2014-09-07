@@ -1,6 +1,5 @@
 package us.corenetwork.limbo.io;
 
-import java.util.ArrayList;
 import java.util.List;
 import us.corenetwork.limbo.Settings;
 
@@ -35,6 +34,6 @@ public class Prisoner {
 	
 	private void initializeNotifications()
 	{
-		notificationTimes = Settings.NOTIFICATION_TIMES.intList();
+		notificationTimes = Settings.NOTIFICATION_TIMES_LEFT.intList();
 	}
 }

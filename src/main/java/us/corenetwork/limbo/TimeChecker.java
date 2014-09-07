@@ -18,11 +18,12 @@ public class TimeChecker implements Runnable {
 				PrisonerStatus status = Prisoners.getStatus(prisoner);
 				if(status == PrisonerStatus.DURING && prisoner.notify)
 				{
-					long minPassed = (Util.currentTime() - prisoner.startTime) / 1000 / 60;
-					if(minPassed == prisoner.notificationTimes.get(0))
+					
+					long minLeft = 1 + LimboManager.getMilisLeft(player) / 1000 / 60;
+					if(prisoner.notificationTimes.contains(new Integer((int) minLeft)))
 					{
 						Util.Message(Settings.MESSAGE_NOTIFICATION.string().replace("<Time>", Util.getSimpleTimeMessage(LimboManager.getMilisLeft(player))), player);
-						prisoner.notificationTimes.remove(0);
+						prisoner.notificationTimes.remove(new Integer((int) minLeft));
 					}
 				}
 				

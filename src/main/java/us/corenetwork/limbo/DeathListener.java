@@ -77,7 +77,7 @@ public class DeathListener implements Listener {
 	@EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
 	public void onPlayerJoinEvent(PlayerJoinEvent  event)
 	{
-		Player player = event.getPlayer();
+		final Player player = event.getPlayer();
 		
 		if (player.isDead() == false)
 		{
@@ -86,7 +86,12 @@ public class DeathListener implements Listener {
 			case OUTSIDE:			
 				break;
 			case DURING:
-				Util.Message(Settings.MESSAGE_NOTIFICATION.string().replace("<Time>", Util.getSimpleTimeMessage(LimboManager.getMilisLeft(player))), player);
+				LimboPlugin.instance.getServer().getScheduler().scheduleSyncDelayedTask(LimboPlugin.instance, new Runnable() {
+					public void run()
+					{
+						Util.Message(Settings.MESSAGE_NOTIFICATION.string().replace("<Time>", Util.getSimpleTimeMessage(LimboManager.getMilisLeft(player))), player);
+					}
+				});
 				break;
 			case AFTER:
 				

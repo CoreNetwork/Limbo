@@ -21,7 +21,7 @@ public class ReleaseCommand extends BaseLimboCommand {
 	{
 		
 		boolean silent = false;
-		if(args.length != 1 || args.length != 2)
+		if(args.length < 1 && args.length > 2)
 		{
 			Util.Message("Usage : /lim release <player> [silent]", sender);
 			return;

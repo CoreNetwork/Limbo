@@ -19,9 +19,11 @@ public class ReleaseCommand extends BaseLimboCommand {
 	@Override
 	public void run(CommandSender sender, String[] args)
 	{
-		if(args.length != 1)
+		
+		boolean silent = false;
+		if(args.length != 1 || args.length != 2)
 		{
-			Util.Message("Usage : /lim release <player>", sender);
+			Util.Message("Usage : /lim release <player> [silent]", sender);
 			return;
 		}
 		
@@ -32,6 +34,20 @@ public class ReleaseCommand extends BaseLimboCommand {
 			return;
 		}
 
+		if(args.length == 2)
+		{
+			if(args[1].toLowerCase().equals("silent"))
+			{
+				silent = true;
+			}
+			else
+			{
+				Util.Message("Usage: /lim release <player> [silent]", sender);
+				return;
+			}
+		}
+		
+		String message = player.getName();
 		switch (LimboManager.getPrisonerStatus(player))
 		{
 		case DURING:
@@ -40,17 +56,19 @@ public class ReleaseCommand extends BaseLimboCommand {
 			{
 				LimboManager.moveOut(player, false);
 			}
-			Util.Message(player.getName() + " has been released.", sender);
+			message += " has been released.";
 			break;
 		case AFTER:
-			Util.Message(player.getName() + " is already released.", sender);
+			message += " is already released.";
 			break;
 		case OUTSIDE:
-			Util.Message(player.getName() + " is not in Limbo.", sender);
+			message += " is not in Limbo.";
 			break;
 		}
 		
-		
-		
+		if(silent == false)
+		{
+			Util.Message(message, sender);
+		}
 	}
 }

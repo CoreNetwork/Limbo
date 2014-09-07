@@ -1,6 +1,6 @@
 name: Limbo
 main: us.corenetwork.limbo.LimboPlugin
-version: 0.1
+version: 1.0
 author: eliadil
 commands:
     lim:

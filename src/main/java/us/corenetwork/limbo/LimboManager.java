@@ -41,11 +41,15 @@ public class LimboManager {
 	{
 		//passing whatever, we only need an object with uuid
 		Prisoners.remove(Prisoners.getPrisoner(player));
+		runOutCommands(player, silent);
+	}
+	
+	public static void runOutCommands(final Player player, boolean silent)
+	{
 		Util.RunCommands(Util.PrepareCommands(Settings.COMMANDS_ON_EXIT.stringList(), new HashMap<String, String>(){{put("<Player>", player.getName());}}));
 		if(silent == false)
 			Util.Message(Settings.MESSAGE_EXIT.string(), player);
 	}
-	
 
 	public static void respawnIn(final Player player)
 	{

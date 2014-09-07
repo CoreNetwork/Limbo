@@ -1,5 +1,6 @@
 package us.corenetwork.limbo.commands;
 
+import org.bukkit.World.Environment;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import us.corenetwork.limbo.LimboManager;
@@ -56,6 +57,11 @@ public class CheckCommand extends BaseLimboCommand{
 		{
 		case OUTSIDE:
 			message = Settings.MESSAGE_CHECK_PLAYER_NEG.string();
+			
+			if(player.getWorld().getEnvironment() == Environment.THE_END)
+			{
+				LimboManager.runOutCommands(player, false);
+			}
 			break;
 		default:
 			if(args.length == 0)

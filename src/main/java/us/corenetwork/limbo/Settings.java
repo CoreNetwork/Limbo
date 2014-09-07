@@ -32,6 +32,22 @@ public enum Settings {
 		add("sudo <Player> warp end-respawn silent");
 	}}),
 	
+	CHALLENGES("Challenges", new ArrayList<String>()),
+	
+	TOP_PER_PAGE("TopPerPage", 10),
+	TOP_FOOTNOTE_COLOR("Top.FootnoteColor", "&7"),
+    TOP_PLACE_COLUMN_HEADER("Top.Place.Header", "&6Place"),
+    TOP_PLACE_COLUMN_DISPLAY("Top.Place.Display", "<Place>"),
+    TOP_PLACE_COLUMN_COLOR("Top.Place.Color", "&6"),
+    TOP_PLACE_COLUMN_LEADING_ZERO_COLOR("Top.Place.LeadingZeroColor", "&8"),
+    TOP_POINTS_COLUMN_HEADER("Top.Points.Header", "&ePoints"),
+    TOP_POINTS_COLUMN_DISPLAY("Top.Points.Display", "<Points>"),
+    TOP_POINTS_COLUMN_COLOR("Top.Points.Color", "&e"),
+    TOP_POINTS_COLUMN_LEADING_ZERO_COLOR("Top.Points.LeadingZeroColor", "&8"),
+    TOP_NAME_COLUMN_HEADER("Top.Name.Header", "&rName"),
+    TOP_NAME_COLUMN_DISPLAY("Top.Name.Display", "<Player>"),
+    TOP_NAME_COLUMN_COLOR("Top.Name.Color", "&r"),
+    
 	MESSAGE_CHECK_SELF("Messages.CheckSelf", "&bYou will stay in Limbo for <Time>"),
 	MESSAGE_CHECK_PLAYER("Messages.CheckPlayer", "&6<Player> is in Limbo, <Time> left"),
 	MESSAGE_CHECK_PLAYER_NEG("Messages.CheckPlayerNeg", "&6<Player> is not in Limbo"),
@@ -40,7 +56,7 @@ public enum Settings {
 	MESSAGE_TIME_PLUR("Messages.TimePluralSyntax", "<Minutes> minutes"),
 	MESSAGE_TIME_DETAILED("Messages.DetailedTimeSyntax", "<Minutes>m <Seconds>s"),
 	
-	MESSAGE_ENTRY("Messages.Entry", new ArrayList<String>(){{add("&bYour death erased your corporeal form and all possessions. &7You will linger in &fLimbo &7for &f<Timer>&7.");
+	MESSAGE_ENTRY("Messages.Entry", new ArrayList<String>(){{add("&bYour death erased your corporeal form and all possessions. &7You will linger in &fLimbo &7for &f<Time>&7.");
 	add("&3Reason: <Death>");}}),
 	MESSAGE_EXIT("Messages.Exit", "&bYou have been released from Limbo."),
 	MESSAGE_DEATH_RESPAWN("Messages.DeathRespawn", "&bYour incorporeal form cannot be damaged."),
@@ -52,9 +68,14 @@ public enum Settings {
 	MESSAGE_INCREASED("Messages.Increased", "<Player>'s stay has been extended by <Time>"),
 	MESSAGE_DECREASED("Messages.Decreased", "<Player>'s stay has been shortened by <Time>"),
 	
+	MESSAGE_STATS("Messages.Stats", "Total : <Total>   Active : <Active>."),
+	
 	MESSAGE_NO_PERMISSION("Messages.NoPermission", "No permission!"),
 	MESSAGE_CONFIGURATION_RELOADED("Messages.ConfigurationReloaded", "Configuration reloaded successfully!");
 
+	
+	
+	
 	private String name;
 	private Object def;
 	
@@ -79,6 +100,11 @@ public enum Settings {
 		return (String) IO.config.get(name, def);
 	}
 
+	public Integer integer()
+	{
+		return (Integer) IO.config.get(name, def);
+	}
+	
 	public Boolean bool()
 	{
 		return (Boolean) IO.config.get(name, def);

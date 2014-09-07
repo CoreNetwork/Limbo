@@ -41,7 +41,6 @@ public class ReleaseCommand extends BaseLimboCommand {
 				LimboManager.moveOut(player);
 			}
 			Util.Message(player.getName() + " has been released.", sender);
-			Util.Message(Settings.MESSAGE_EXIT.string(), player);
 			break;
 		case AFTER:
 			Util.Message(player.getName() + " is already released.", sender);

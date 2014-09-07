@@ -4,8 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import org.bukkit.entity.Player;
 import us.corenetwork.limbo.Logs;
+import us.corenetwork.limbo.Util;
 
 public class LimboIO {
 
@@ -30,24 +33,20 @@ public class LimboIO {
 		}
 	}
 	
-	public static Prisoner getPrisoner(Player player)
+	public static List<Prisoner> getPrisoners()
 	{
-		Prisoner prisoner = null;
+		List<Prisoner> prisoners = new ArrayList<Prisoner>();
 		
 		try 
 		{
 			Connection conn = IO.getConnection();
 			
-			PreparedStatement statement = conn.prepareStatement("SELECT UUID, StartTime, Duration, ToRelease, SpawnedOnce, Challenge, ChallengeStartTime FROM prisoners WHERE UUID = ?");
-			statement.setString(1, player.getUniqueId().toString());
+			PreparedStatement statement = conn.prepareStatement("SELECT UUID, StartTime, Duration, ToRelease, SpawnedOnce, Challenge, ChallengeStartTime FROM prisoners");
 			ResultSet rs = statement.executeQuery();
 			
-
-			if(rs.next())
+			while(rs.next())
 			{
-				boolean tr = rs.getBoolean(4);
-				boolean so = rs.getBoolean(5);
-				prisoner = new Prisoner(rs.getString(1), rs.getLong(2), rs.getLong(3), tr, so, rs.getString(6), rs.getLong(7));
+				prisoners.add(new Prisoner(rs.getString(1), rs.getLong(2), rs.getLong(3), rs.getBoolean(4), rs.getBoolean(5), rs.getString(6), rs.getLong(7)));
 			}
 			
 			statement.close();
@@ -56,9 +55,9 @@ public class LimboIO {
 			e.printStackTrace();
 		}
 		
-		return prisoner;
+		return prisoners;
 	}
-
+	
 	public static void insertPrisoner(Prisoner prisoner)
 	{
 		try 
@@ -169,5 +168,76 @@ public class LimboIO {
 		}
 		
 		return record;
+	}
+	
+	public static List<Record> getRecords(String challenge, Player player, int offset, int limit)
+	{
+		List<Record> records = new ArrayList<Record>();
+		try 
+		{
+			Connection conn = IO.getConnection();
+			PreparedStatement statement;
+			if(player != null)
+			{
+				statement = conn.prepareStatement("SELECT UUID, Duration  FROM records WHERE Challenge = ? AND UUID = ? ORDER BY Duration ASC LIMIT ?, ?");
+				statement.setString(1, challenge);
+				statement.setString(2, player.getUniqueId().toString());
+				statement.setInt(3, offset);
+				statement.setInt(4, limit);
+			}
+			else
+			{
+				statement = conn.prepareStatement("SELECT UUID, Duration FROM records WHERE Challenge = ?  ORDER BY Duration ASC LIMIT ?, ?");
+				statement.setString(1, challenge);
+				statement.setInt(2, offset);
+				statement.setInt(3, limit);
+			}
+			
+			ResultSet rs = statement.executeQuery();
+			while(rs.next())
+			{
+				records.add(new Record(rs.getString(1), challenge, rs.getLong(2)));
+			}
+			
+			statement.close();
+		} catch (SQLException e) {
+			Logs.severe("Error while retrieving records from database !");
+			e.printStackTrace();
+		}
+		return records;
+	}
+	
+	public static int getRecordsCountFor(String challenge, Player player)
+	{
+		int count = 0;
+		try 
+		{
+			Connection conn = IO.getConnection();
+			PreparedStatement statement;
+			if(player != null)
+			{
+				statement = conn.prepareStatement("SELECT COUNT(*)  FROM records WHERE Challenge = ? AND UUID = ?");
+				statement.setString(1, challenge);
+				statement.setString(2, player.getUniqueId().toString());
+			}
+			else
+			{
+				statement = conn.prepareStatement("SELECT COUNT(*)  FROM records WHERE Challenge = ?");
+				statement.setString(1, challenge);
+			}
+			
+			ResultSet rs = statement.executeQuery();
+			if(rs.next())
+			{
+				count = rs.getInt(1);
+			}
+			
+			statement.close();
+		} catch (SQLException e) {
+			Logs.severe("Error while retrieving records count from database !");
+			e.printStackTrace();
+		}
+		
+		return count;
 	}
 }

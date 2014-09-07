@@ -20,6 +20,4 @@ public class Prisoner {
 		this.challenge = challenge;
 		this.challengeStartTime = challengeStartTime;
 	}
-	
-	
 }

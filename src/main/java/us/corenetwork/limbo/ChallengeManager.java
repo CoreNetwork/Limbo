@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import us.corenetwork.limbo.io.IO;
 import us.corenetwork.limbo.io.LimboIO;
 import us.corenetwork.limbo.io.Prisoner;
+import us.corenetwork.limbo.io.Prisoners;
 import us.corenetwork.limbo.io.Record;
 
 public class ChallengeManager {
@@ -25,15 +26,15 @@ public class ChallengeManager {
 	
 	private static void updateChallenge(Player player, String challenge, long time)
 	{
-		Prisoner prisoner = LimboIO.getPrisoner(player);
+		Prisoner prisoner = Prisoners.getPrisoner(player);
 		prisoner.challenge = challenge;
 		prisoner.challengeStartTime = time;
-		LimboIO.updatePrisoner(prisoner);
+		Prisoners.save(prisoner);
 	}
 	
 	public static void finishChallenge(Player player, String challenge)
 	{
-		Prisoner prisoner = LimboIO.getPrisoner(player);
+		Prisoner prisoner = Prisoners.getPrisoner(player);
 		long duration = Util.currentTime() - prisoner.challengeStartTime;
 		Record bestRecord = LimboIO.getBestRecord(challenge);
 		
@@ -60,7 +61,7 @@ public class ChallengeManager {
 	
 	public static boolean isPlayerTakingPartIn(Player player, String challenge)
 	{
-		String dbCh = LimboIO.getPrisoner(player).challenge;
+		String dbCh = Prisoners.getPrisoner(player).challenge;
 		if(dbCh == null)
 			return false;
 		else
@@ -69,14 +70,14 @@ public class ChallengeManager {
 	
 	public static boolean isPlayerTakingPart(Player player)
 	{
-		return LimboIO.getPrisoner(player).challenge != null;
+		return Prisoners.getPrisoner(player).challenge != null;
 	}
 	
 	public static boolean challengeExists(String challenge)
 	{
 		return IO.config.get("Challenges." + challenge) != null;
-	}
-
+	}	
+	
 	public static List<String> getRespawnCommands(String challenge)
 	{
 		return IO.config.getStringList("Challenges."+challenge+".CommandsOnRespawn");

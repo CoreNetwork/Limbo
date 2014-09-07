@@ -4,14 +4,20 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import com.evilmidget38.NameFetcher;
 
 public class Util {
 
+    private static Map<String, UUID> playerNameToUUID = new HashMap<String, UUID>();
+    private static Map<UUID, String> UUIDToPlayerName = new HashMap<UUID, String>();
+	
 	public static void Message(String message, CommandSender sender)
 	{
 		message = message.replaceAll("\\&([0-9abcdefklmnor])", ChatColor.COLOR_CHAR + "$1");
@@ -188,11 +194,11 @@ public class Util {
 		}
 	}
 
-	public static String getDetailedTimeMessage(long time)
+	public static String getDetailedTimeMessage(long miliseconds)
 	{
 		String timeMessage;
-		long minutesLeft = time / 1000 / 60;
-		long secondsLeft = (time / 1000) % 60;
+		long minutesLeft = miliseconds / 1000 / 60;
+		long secondsLeft = (miliseconds / 1000) % 60;
 		
 		timeMessage = Settings.MESSAGE_TIME_DETAILED.string();
 		timeMessage = timeMessage.replace("<Minutes>", minutesLeft+"");
@@ -200,4 +206,50 @@ public class Util {
 		return timeMessage;
 	}
 
+	public static String getSimpleTimeMessage(String timeSyntax)
+	{
+		long miliseconds = parseTimeToMilis(timeSyntax);
+		long minutesLeft = miliseconds / 1000 / 60;
+		
+		String message;
+		
+		if(minutesLeft == 1)
+			message = Settings.MESSAGE_TIME_SING.string().replace("<Minutes>", 1+"");
+		else
+			message = Settings.MESSAGE_TIME_PLUR.string().replace("<Minutes>", minutesLeft+"");
+		
+		return message;
+	}
+	
+	public static String getPlayerNameFromUUID(final UUID uuid) {
+        if (uuid == null) {
+            return "<no player>";
+        }
+        String name = UUIDToPlayerName.get(uuid);
+        if (name == null) {
+            name = Bukkit.getOfflinePlayer(uuid).getName();
+        }
+        if (name == null) {
+            NameFetcher fetcher = new NameFetcher(new ArrayList<UUID>(){{add(uuid);}});
+            try {
+                Map<UUID, String> names = fetcher.call();
+                name = names.get(uuid);
+                if (name != null) {
+                    UUIDToPlayerName.put(uuid, name);
+                    playerNameToUUID.put(name, uuid);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return name != null ? name : "<" + uuid.toString() + ">";
+    }
+
+	public static UUID getUUIDFromString(String uuid)
+	{
+		if (uuid == null) {
+            return null;
+        }
+        return UUID.fromString(uuid);
+	}
 }

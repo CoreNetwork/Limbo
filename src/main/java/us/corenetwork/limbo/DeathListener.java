@@ -77,22 +77,22 @@ public class DeathListener implements Listener {
 	{
 		Player player = event.getPlayer();
 		
-		switch (LimboManager.getPrisonerStatus(player))
+		if (player.isDead() == false)
 		{
-		case OUTSIDE:			
-			break;
-		case DURING:
-			Util.Message(Settings.MESSAGE_NOTIFICATION.string().replace("<Time>", Util.getSimpleTimeMessage(LimboManager.getMilisLeft(player))), player);
-			break;
-		case AFTER:
-			if (player.isDead() == false)
+			switch (LimboManager.getPrisonerStatus(player))
 			{
-				LimboManager.moveOut(player);
-				Logs.debug(player.getName() + " respawned as RELEASED");
+			case OUTSIDE:			
+				break;
+			case DURING:
+				Util.Message(Settings.MESSAGE_NOTIFICATION.string().replace("<Time>", Util.getSimpleTimeMessage(LimboManager.getMilisLeft(player))), player);
+				break;
+			case AFTER:
+				
+					LimboManager.moveOut(player);
+					Logs.debug(player.getName() + " respawned as RELEASED");
+				break;
 			}
-			break;
 		}
-		
 		
 	}
 }

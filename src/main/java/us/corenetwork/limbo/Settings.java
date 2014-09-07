@@ -75,6 +75,9 @@ public enum Settings {
 	
 	MESSAGE_STATS("Messages.Stats", "Total : <Total>   Active : <Active>."),
 	
+	MESSAGE_NO_TOP("Messages.NoTop", "&cNobody finished this challenge yet!"),
+	MESSAGE_PLAYER_NO_TOP("Messages.PlayerNoTop", "&c<Player> did not finish this challenge yet!"),
+	
 	MESSAGE_NO_PERMISSION("Messages.NoPermission", "No permission!"),
 	MESSAGE_CONFIGURATION_RELOADED("Messages.ConfigurationReloaded", "Configuration reloaded successfully!");
 

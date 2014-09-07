@@ -86,6 +86,19 @@ public class TopCommand extends BaseLimboCommand {
 		
 		int countAll = LimboIO.getRecordsCountFor(challenge, player);
 		
+		if(countAll == 0)
+		{
+			if(player != null)
+			{
+				Util.Message(Settings.MESSAGE_PLAYER_NO_TOP.string().replace("<Player>", player.getName()), sender);
+			}
+			else
+			{
+				Util.Message(Settings.MESSAGE_NO_TOP.string(), sender);
+			}
+			return;
+		}
+		
 		int pagesAll = (int)Math.ceil((double)countAll/perPage);
 		if (page > pagesAll)
 			page = pagesAll;

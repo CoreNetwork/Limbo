@@ -103,6 +103,7 @@ public class IO {
             		+ "SpawnedOnce INTEGER, "
             		+ "Challenge INTEGER, "
             		+ "ChallengeStartTime INTEGER, "
+            		+ "Notify INTEGER,"
             		+ "PRIMARY KEY(UUID))");
             st.executeUpdate("CREATE TABLE IF NOT EXISTS deaths "
             		+ "(UUID STRING NOT NULL, "

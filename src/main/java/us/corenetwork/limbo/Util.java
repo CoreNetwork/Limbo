@@ -159,7 +159,7 @@ public class Util {
 			return true;
 		
 		char c = time.charAt(time.length() - 1);
-		String sTime = time.substring(1, time.length()-1);
+		String sTime = time.substring(0, time.length()-1);
 		
 		if(c == 's' || c == 'h' || c == 'm')
 		{
@@ -209,9 +209,18 @@ public class Util {
 	public static String getSimpleTimeMessage(String timeSyntax)
 	{
 		long miliseconds = parseTimeToMilis(timeSyntax);
+		return getSimpleTimeMessage(miliseconds);
+	}
+	
+	public static String getSimpleTimeMessage(long miliseconds)
+	{
 		long minutesLeft = miliseconds / 1000 / 60;
+		long secondsLeft = miliseconds / 1000 % 60;
 		
 		String message;
+		
+		if(secondsLeft >= 30)
+			minutesLeft++;
 		
 		if(minutesLeft == 1)
 			message = Settings.MESSAGE_TIME_SING.string().replace("<Minutes>", 1+"");

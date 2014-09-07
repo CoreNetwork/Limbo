@@ -41,12 +41,12 @@ public class LimboIO {
 		{
 			Connection conn = IO.getConnection();
 			
-			PreparedStatement statement = conn.prepareStatement("SELECT UUID, StartTime, Duration, ToRelease, SpawnedOnce, Challenge, ChallengeStartTime FROM prisoners");
+			PreparedStatement statement = conn.prepareStatement("SELECT UUID, StartTime, Duration, ToRelease, SpawnedOnce, Challenge, ChallengeStartTime, Notify FROM prisoners");
 			ResultSet rs = statement.executeQuery();
 			
 			while(rs.next())
 			{
-				prisoners.add(new Prisoner(rs.getString(1), rs.getLong(2), rs.getLong(3), rs.getBoolean(4), rs.getBoolean(5), rs.getString(6), rs.getLong(7)));
+				prisoners.add(new Prisoner(rs.getString(1), rs.getLong(2), rs.getLong(3), rs.getBoolean(4), rs.getBoolean(5), rs.getString(6), rs.getLong(7), rs.getBoolean(8)));
 			}
 			
 			statement.close();
@@ -64,7 +64,7 @@ public class LimboIO {
 		{
 			Connection conn = IO.getConnection();
 			
-			PreparedStatement statement = conn.prepareStatement("INSERT INTO prisoners (UUID, StartTime, Duration, ToRelease, SpawnedOnce, Challenge, ChallengeStartTime) VALUES (?,?,?,?,?,?,?)");
+			PreparedStatement statement = conn.prepareStatement("INSERT INTO prisoners (UUID, StartTime, Duration, ToRelease, SpawnedOnce, Challenge, ChallengeStartTime, Notify) VALUES (?,?,?,?,?,?,?,?)");
 			statement.setString(1, prisoner.uuid);
 			statement.setLong(2, prisoner.startTime);
 			statement.setLong(3, prisoner.duration);
@@ -72,6 +72,7 @@ public class LimboIO {
 			statement.setBoolean(5, prisoner.spawnedOnce);
 			statement.setString(6, prisoner.challenge);
 			statement.setLong(7, prisoner.challengeStartTime);
+			statement.setBoolean(8, prisoner.notify);
 			
 			statement.execute();
 			statement.close();
@@ -89,15 +90,16 @@ public class LimboIO {
 			Connection conn = IO.getConnection();
 			
 			PreparedStatement statement = conn.prepareStatement("UPDATE prisoners SET StartTime = ?, "
-					+ "Duration = ?, ToRelease = ?, SpawnedOnce = ?, Challenge = ?, ChallengeStartTime = ? WHERE UUID = ?");
-			statement.setString(7, prisoner.uuid);
+					+ "Duration = ?, ToRelease = ?, SpawnedOnce = ?, Challenge = ?, ChallengeStartTime = ?, Notify = ? WHERE UUID = ?");
+			statement.setString(8, prisoner.uuid);
 			statement.setLong(1, prisoner.startTime);
 			statement.setLong(2, prisoner.duration);
 			statement.setBoolean(3, prisoner.toRelease);
 			statement.setBoolean(4, prisoner.spawnedOnce);
 			statement.setString(5, prisoner.challenge);
 			statement.setLong(6, prisoner.challengeStartTime);
-
+			statement.setBoolean(7, prisoner.notify);
+			
 			statement.execute();
 			statement.close();
 			conn.commit();

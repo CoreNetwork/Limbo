@@ -15,6 +15,13 @@ public class TopCommand extends BaseLimboCommand {
 
 	private int offset, perPage;
 	int maxPointLength;
+
+	public TopCommand()
+	{
+		permission = "top";
+		desc = "Print a top list.";
+		needPlayer = false;
+	}
 	
 	@Override
 	public void run(CommandSender sender, String[] args)

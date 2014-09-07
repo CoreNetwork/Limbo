@@ -12,10 +12,24 @@ public class TimeChecker implements Runnable {
 		{
 			Player player = LimboPlugin.instance.getServer().getPlayer(Util.getUUIDFromString(prisoner.uuid));
 			
-			PrisonerStatus status = Prisoners.getStatus(prisoner);
-			if(player != null && status == PrisonerStatus.AFTER && player.isOnline() && player.isDead() == false)
+			
+			if(player != null && player.isOnline())
 			{
-				LimboManager.moveOut(player);
+				PrisonerStatus status = Prisoners.getStatus(prisoner);
+				if(status == PrisonerStatus.DURING && prisoner.notify)
+				{
+					long minPassed = (Util.currentTime() - prisoner.startTime) / 1000 / 60;
+					if(minPassed == prisoner.notificationTimes.get(0))
+					{
+						Util.Message(Settings.MESSAGE_NOTIFICATION.string().replace("<Time>", Util.getSimpleTimeMessage(LimboManager.getMilisLeft(player))), player);
+						prisoner.notificationTimes.remove(0);
+					}
+				}
+				
+				if(status == PrisonerStatus.AFTER && player.isDead() == false)
+				{
+					LimboManager.moveOut(player);
+				}
 			}
 		}
 	}

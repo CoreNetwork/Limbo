@@ -9,6 +9,7 @@ public enum Settings {
 	DEBUG("Debug", false),
 	
 	DEFAULT_DURATION("DefaultDuration", "60m"),
+	NOTIFICATION_TIMES("NotificationTimes", new Integer[]{10, 20, 30, 40, 50, 55}),
 	
 	COMMANDS_ON_ENTRY("Limbo.CommandsOnEntry", new ArrayList<String>(){{
 		add("rspawn unprotect silent");
@@ -61,6 +62,9 @@ public enum Settings {
 	MESSAGE_EXIT("Messages.Exit", "&bYou have been released from Limbo."),
 	MESSAGE_DEATH_RESPAWN("Messages.DeathRespawn", "&bYour incorporeal form cannot be damaged."),
 	MESSAGE_NOTIFICATION("Messages.Notification", "&bRemaining time: <Time>"),
+	MESSAGE_NOTIFICATION_ON("Messages.NotificationOn", "Notifications ON!"),
+	MESSAGE_NOTIFICATION_OFF("Messages.NotificationOff", "Notifications OFF!"),
+	MESSAGE_NOTIFICATION_CANT_USE("Messages.NotificationCantUse", "You can only toggle notifications while in Limbo."),
 	
 	MESSAGE_INCREASED_SELF("Messages.IncreasedSelf", "Your time here has been extended by <Time>"),
 	MESSAGE_DECREASED_SELF("Messages.DecreasedSelf", "Your time here has been shortened by <Time>"),
@@ -113,5 +117,10 @@ public enum Settings {
 	public List<String> stringList()
 	{
 		return IO.config.getStringList(name);
+	}
+	
+	public List<Integer> intList()
+	{
+		return IO.config.getIntegerList(name);
 	}
 }

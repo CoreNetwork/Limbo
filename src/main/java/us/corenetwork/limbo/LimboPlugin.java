@@ -15,6 +15,7 @@ import us.corenetwork.limbo.commands.FinishChallengeCommand;
 import us.corenetwork.limbo.commands.ImprisonCommand;
 import us.corenetwork.limbo.commands.IncreaseCommand;
 import us.corenetwork.limbo.commands.LimboHelpCommand;
+import us.corenetwork.limbo.commands.NotifyCommand;
 import us.corenetwork.limbo.commands.ReleaseCommand;
 import us.corenetwork.limbo.commands.ReloadCommand;
 import us.corenetwork.limbo.commands.StatsCommand;
@@ -48,6 +49,7 @@ public class LimboPlugin extends JavaPlugin {
 		limboCommands.put("imprison", new ImprisonCommand());
 		limboCommands.put("stats", new StatsCommand());
 		limboCommands.put("top", new TopCommand());
+		limboCommands.put("notify", new NotifyCommand());
 		
 		
 		

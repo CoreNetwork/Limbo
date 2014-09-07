@@ -45,7 +45,6 @@ public class DeathListener implements Listener {
 	@EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
 	public void onPlayerRespawnEvent(PlayerRespawnEvent event)
 	{
-		Logs.debug("woo respawn");
 		final Player player = event.getPlayer();
 		
 		switch (LimboManager.getPrisonerStatus(player))
@@ -80,7 +79,6 @@ public class DeathListener implements Listener {
 	@EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
 	public void onPlayerJoinEvent(PlayerJoinEvent  event)
 	{
-		Logs.debug("WOO join");
 		Player player = event.getPlayer();
 		
 		if (player.isDead() == false)
@@ -90,7 +88,7 @@ public class DeathListener implements Listener {
 			case OUTSIDE:			
 				break;
 			case DURING:
-				//maybe some stuff with time and all?
+				Util.Message(Settings.MESSAGE_NOTIFICATION.string().replace("<Time>", Util.getSimpleTimeMessage(LimboManager.getMilisLeft(player))), player);
 				break;
 			case AFTER:
 				LimboManager.moveOut(player);

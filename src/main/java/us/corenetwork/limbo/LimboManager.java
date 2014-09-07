@@ -12,7 +12,7 @@ public class LimboManager {
 	
 	public static void imprison(Player player)
 	{
-		Prisoner prisoner = new Prisoner(player.getUniqueId().toString(), Util.currentTime(), Util.parseTimeToMilis(Settings.DEFAULT_DURATION.string()), false, false, null, 0);
+		Prisoner prisoner = new Prisoner(player.getUniqueId().toString(), Util.currentTime(), Util.parseTimeToMilis(Settings.DEFAULT_DURATION.string()), false, false, null, 0, true);
 		Prisoners.add(prisoner);
 	}
 	
@@ -22,7 +22,7 @@ public class LimboManager {
 		List<String> msgList = Settings.MESSAGE_ENTRY.stringList();
 		for(String msg : msgList)
 		{
-			Util.Message(msg.replace("<Time>", Util.getSimpleTimeMessage(Settings.DEFAULT_DURATION.string())).replace("<Death>", "LOO death message"), player);
+			Util.Message(msg.replace("<Time>", Util.getSimpleTimeMessage(LimboManager.getMilisLeft(player))).replace("<Death>", "LOO death message"), player);
 		}
 		
 	}

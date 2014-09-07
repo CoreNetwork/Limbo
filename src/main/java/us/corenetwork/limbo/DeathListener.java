@@ -1,5 +1,6 @@
 package us.corenetwork.limbo;
 
+import org.bukkit.ChatColor;
 import org.bukkit.World.Environment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -26,8 +27,9 @@ public class DeathListener implements Listener {
 		{
 			if(LimboManager.getPrisonerStatus(player) == PrisonerStatus.OUTSIDE && shouldGoToLimbo(player))
 			{
+				String strippedDeathMessage = ChatColor.stripColor(event.getDeathMessage());
 				Logs.debug(player.getName() + " gone to limbo!");
-				LimboIO.insertDeath(new Death(player.getUniqueId().toString(), Util.currentTime(), event.getDeathMessage()));
+				LimboIO.insertDeath(new Death(player.getUniqueId().toString(), Util.currentTime(), strippedDeathMessage));
 				LimboManager.imprison(player);
 			}
 		}
@@ -64,7 +66,7 @@ public class DeathListener implements Listener {
 			LimboPlugin.instance.getServer().getScheduler().scheduleSyncDelayedTask(LimboPlugin.instance, new Runnable() {
 				public void run()
 				{
-					LimboManager.moveOut(player);
+					LimboManager.moveOut(player, false);
 				}
 			});
 			Logs.debug(player.getName() + " respawned as RELEASED");
@@ -88,7 +90,7 @@ public class DeathListener implements Listener {
 				break;
 			case AFTER:
 				
-					LimboManager.moveOut(player);
+					LimboManager.moveOut(player, false);
 					Logs.debug(player.getName() + " respawned as RELEASED");
 				break;
 			}

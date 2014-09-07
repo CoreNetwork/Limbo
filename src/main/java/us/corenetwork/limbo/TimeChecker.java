@@ -29,7 +29,7 @@ public class TimeChecker implements Runnable {
 				
 				if(status == PrisonerStatus.AFTER && player.isDead() == false)
 				{
-					LimboManager.moveOut(player);
+					LimboManager.moveOut(player, false);
 				}
 			}
 		}

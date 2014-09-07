@@ -52,7 +52,7 @@ public class FinishChallengeCommand extends BaseLimboCommand{
 				LimboManager.release(player);
 				if(player.isOnline() && player.isDead() == false)
 				{
-					LimboManager.moveOut(player);
+					LimboManager.moveOut(player, true);
 				}
 			}
 			else

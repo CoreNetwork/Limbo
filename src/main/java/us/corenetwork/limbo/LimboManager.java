@@ -37,12 +37,13 @@ public class LimboManager {
 		Prisoners.save(prisoner);
 	}
 	
-	public static void moveOut(final Player player)
+	public static void moveOut(final Player player, boolean silent)
 	{
 		//passing whatever, we only need an object with uuid
 		Prisoners.remove(Prisoners.getPrisoner(player));
 		Util.RunCommands(Util.PrepareCommands(Settings.COMMANDS_ON_EXIT.stringList(), new HashMap<String, String>(){{put("<Player>", player.getName());}}));
-		Util.Message(Settings.MESSAGE_EXIT.string(), player);
+		if(silent == false)
+			Util.Message(Settings.MESSAGE_EXIT.string(), player);
 	}
 	
 

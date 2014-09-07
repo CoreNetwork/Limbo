@@ -38,7 +38,7 @@ public class ReleaseCommand extends BaseLimboCommand {
 			LimboManager.release(player);
 			if(player.isOnline() && player.isDead() == false)
 			{
-				LimboManager.moveOut(player);
+				LimboManager.moveOut(player, false);
 			}
 			Util.Message(player.getName() + " has been released.", sender);
 			break;

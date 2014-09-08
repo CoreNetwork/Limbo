@@ -84,7 +84,13 @@ public class ChallengeManager {
 	
 	public static boolean isPlayerTakingPart(Player player)
 	{
-		return Prisoners.getPrisoner(player).challenge != null;
+		boolean isTakingPart;
+		String chDb = Prisoners.getPrisoner(player).challenge;
+		if(chDb == null)
+			return false;
+		if(chDb.equals(""))
+			return false;
+		return true;
 	}
 	
 	public static boolean challengeExists(String challenge)

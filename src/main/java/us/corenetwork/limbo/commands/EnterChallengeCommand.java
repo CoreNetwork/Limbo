@@ -41,7 +41,7 @@ public class EnterChallengeCommand extends BaseLimboCommand {
 			return;
 		}
 		
-		String challenge = args[1];
+		String challenge = args[1].toLowerCase();
 		
 		if(ChallengeManager.challengeExists(challenge))
 		{

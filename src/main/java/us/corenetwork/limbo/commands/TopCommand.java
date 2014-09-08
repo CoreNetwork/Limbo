@@ -38,7 +38,7 @@ public class TopCommand extends BaseLimboCommand {
 		perPage = Settings.TOP_PER_PAGE.integer();
 		Player player = null;
 		
-		String challenge = args[0];
+		String challenge = args[0].toLowerCase();
 		
 		if(ChallengeManager.challengeExists(challenge) == false)
 		{

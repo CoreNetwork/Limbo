@@ -2,7 +2,9 @@ package us.corenetwork.limbo;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import us.corenetwork.limbo.io.IO;
 import us.corenetwork.limbo.io.LimboIO;
@@ -12,6 +14,18 @@ import us.corenetwork.limbo.io.Record;
 
 public class ChallengeManager {
 
+	private static Map<String, ConfigurationSection> chMap;
+	
+	public static void reloadChMap()
+	{
+		ConfigurationSection chSection = IO.config.getConfigurationSection("Challenges");
+		chMap = new HashMap<String, ConfigurationSection>();
+		for(String key : chSection.getKeys(false))
+		{
+			chMap.put(key.toLowerCase(), chSection.getConfigurationSection(key));
+		}
+	}
+	
 	public static void enterChallenge(final Player player, String challenge)
 	{
 		updateChallenge(player, challenge, Util.currentTime());
@@ -20,7 +34,7 @@ public class ChallengeManager {
 	
 	public static void exitChallenge(final Player player, String challenge)
 	{
-		updateChallenge(player, null, 0);
+		updateChallenge(player, "", 0);
 		Util.RunCommands(Util.PrepareCommands(ChallengeManager.getExitCommands(challenge), new HashMap<String, String>(){{put("<Player>", player.getName());}}));
 	}
 	
@@ -39,14 +53,14 @@ public class ChallengeManager {
 		Record bestRecord = LimboIO.getBestRecord(challenge);
 		
 		LimboIO.insertRecord(new Record(player.getUniqueId().toString(), challenge, duration));
-		updateChallenge(player, null, 0);
+		updateChallenge(player, "", 0);
 
 		
 		if(bestRecord != null && bestRecord.duration > duration)
 		{
 			Player prevBestPlayer = LimboPlugin.instance.getServer().getPlayer(UUID.fromString(bestRecord.uuid));
 			
-			List<String> msgList = IO.config.getStringList("Challenges."+challenge+".VictoryRecord");
+			List<String> msgList = chMap.get(challenge).getStringList("VictoryRecord");
 			for(String msg : msgList)
 			{
 				Util.Broadcast(msg.replace("<Player>", player.getName()).replace("<PreviousPlayer>", prevBestPlayer.getName()).replace("<DetailedTime>",  
@@ -55,7 +69,7 @@ public class ChallengeManager {
 		}
 		else
 		{
-			Util.Broadcast(IO.config.getString("Challenges."+challenge+".Victory").replace("<Player>", player.getName()).replace("<DetailedTime>",  Util.getDetailedTimeMessage(duration)));
+			Util.Broadcast(chMap.get(challenge).getString("Victory").replace("<Player>", player.getName()).replace("<DetailedTime>",  Util.getDetailedTimeMessage(duration)));
 		}
 	}
 	
@@ -75,19 +89,19 @@ public class ChallengeManager {
 	
 	public static boolean challengeExists(String challenge)
 	{
-		return IO.config.get("Challenges." + challenge) != null;
+		return chMap.get(challenge) != null;
 	}	
 	
 	public static List<String> getRespawnCommands(String challenge)
 	{
-		return IO.config.getStringList("Challenges."+challenge+".CommandsOnRespawn");
+		return chMap.get(challenge).getStringList("CommandsOnRespawn");
 	}
 	public static List<String> getEntryCommands(String challenge)
 	{
-		return IO.config.getStringList("Challenges."+challenge+".CommandsOnEntry");
+		return chMap.get(challenge).getStringList("CommandsOnEntry");
 	}
 	public static List<String> getExitCommands(String challenge)
 	{
-		return IO.config.getStringList("Challenges."+challenge+".CommandsOnExit");
+		return chMap.get(challenge).getStringList("CommandsOnExit");
 	}
 }

@@ -55,7 +55,6 @@ public class LimboPlugin extends JavaPlugin {
 		
 		IO.LoadSettings();
 		IO.PrepareDB();
-		
 		Prisoners.readAll();
 		
 		if (!setupPermissions())

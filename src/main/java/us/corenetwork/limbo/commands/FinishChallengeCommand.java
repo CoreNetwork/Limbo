@@ -42,7 +42,7 @@ public class FinishChallengeCommand extends BaseLimboCommand{
 		}
 		
 		
-		String challenge = args[1];
+		String challenge = args[1].toLowerCase();
 		
 		if(ChallengeManager.challengeExists(challenge))
 		{

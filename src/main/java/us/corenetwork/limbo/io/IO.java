@@ -10,6 +10,7 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
+import us.corenetwork.limbo.ChallengeManager;
 import us.corenetwork.limbo.LimboPlugin;
 import us.corenetwork.limbo.Settings;
 
@@ -26,7 +27,7 @@ public class IO {
 				config.save(new File(LimboPlugin.instance.getDataFolder(),"config.yml"));
 
 			config.load(new File(LimboPlugin.instance.getDataFolder(),"config.yml"));
-			
+
 			for (Settings s : Settings.values())
 			{
 				if (config.get(s.getName()) == null && s.getDefault() != null) 
@@ -35,6 +36,8 @@ public class IO {
 
 			saveConfig();
 
+			ChallengeManager.reloadChMap();
+			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

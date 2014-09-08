@@ -11,9 +11,9 @@ import us.corenetwork.limbo.io.Prisoners;
 public class LimboManager {
 
 	
-	public static void imprison(Player player)
+	public static void imprison(Player player, boolean skipFirstRespawn)
 	{
-		Prisoner prisoner = new Prisoner(player.getUniqueId().toString(), Util.currentTime(), Util.parseTimeToMilis(Settings.DEFAULT_DURATION.string()), false, false, null, 0, true);
+		Prisoner prisoner = new Prisoner(player.getUniqueId().toString(), Util.currentTime(), Util.parseTimeToMilis(Settings.DEFAULT_DURATION.string()), false, skipFirstRespawn, null, 0, true);
 		Prisoners.add(prisoner);
 	}
 	

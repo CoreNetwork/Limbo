@@ -43,7 +43,7 @@ public class ImprisonCommand extends BaseLimboCommand {
 			Util.Message(player.getName() + " is being released from limbo, you can't imprison him now.", sender);
 			break;
 		case OUTSIDE:
-			LimboManager.imprison(player);
+			LimboManager.imprison(player, true);
 			if(player.isOnline() && player.isDead() == false)
 			{
 				LimboManager.moveIn(player);

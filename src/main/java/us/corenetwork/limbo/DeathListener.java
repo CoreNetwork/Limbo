@@ -30,7 +30,7 @@ public class DeathListener implements Listener {
 				String strippedDeathMessage = ChatColor.stripColor(event.getDeathMessage());
 				Logs.debug(player.getName() + " gone to limbo!");
 				LimboIO.insertDeath(new Death(player.getUniqueId().toString(), Util.currentTime(), strippedDeathMessage));
-				LimboManager.imprison(player);
+				LimboManager.imprison(player, false);
 			}
 		}
 	}

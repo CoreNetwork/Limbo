@@ -81,10 +81,17 @@ public class TopCommand extends BaseLimboCommand {
 				return;
 			}
 		}
+		int countAll;
 		
+		if(player == null && Settings.TOP_COMPACT.bool() == true)
+		{
+			countAll = LimboIO.getDistinctCountFor(challenge);
+		}
+		else
+		{
+			countAll = LimboIO.getRecordsCountFor(challenge, player);
+		}
 		
-		
-		int countAll = LimboIO.getRecordsCountFor(challenge, player);
 		
 		if(countAll == 0)
 		{
@@ -107,7 +114,16 @@ public class TopCommand extends BaseLimboCommand {
 		
 		offset = (page-1)*perPage;
 		
-		List<Record> records = LimboIO.getRecords(challenge, player, offset, perPage);
+		List<Record> records;
+		if(player == null && Settings.TOP_COMPACT.bool() == true)
+		{
+			records = LimboIO.getDistinctRecordsFor(challenge, offset, perPage);
+		}
+		else
+		{
+			records = LimboIO.getRecords(challenge, player, offset, perPage);
+		}
+		
 		
 		displayHeader(sender);
 		int counter = 1;

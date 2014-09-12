@@ -272,4 +272,56 @@ public class LimboIO {
 		return count;
 	}
 
+	public static int getDistinctCountFor(String challenge)
+	{
+		int count = 0;
+		try 
+		{
+			Connection conn = IO.getConnection();
+			PreparedStatement statement;
+			
+			statement = conn.prepareStatement("SELECT COUNT(distinct uuid)  FROM records WHERE Challenge = ?");
+			statement.setString(1, challenge);
+			
+			
+			ResultSet rs = statement.executeQuery();
+			if(rs.next())
+			{
+				count = rs.getInt(1);
+			}
+			
+			statement.close();
+		} catch (SQLException e) {
+			Logs.severe("Error while retrieving records count from database !");
+			e.printStackTrace();
+		}
+		
+		return count;
+	}
+	
+	public static List<Record> getDistinctRecordsFor(String challenge, int offset, int limit)
+	{
+		List<Record> records = new ArrayList<Record>();
+		try 
+		{
+			Connection conn = IO.getConnection();
+			PreparedStatement statement;
+			statement = conn.prepareStatement("SELECT uuid, MIN(duration) FROM records WHERE challenge = ? GROUP BY uuid ORDER BY duration ASC limit ?, ?");
+			statement.setString(1, challenge);
+			statement.setInt(2, offset);
+			statement.setInt(3, limit);
+			
+			ResultSet rs = statement.executeQuery();
+			while(rs.next())
+			{
+				records.add(new Record(rs.getString(1), challenge, rs.getLong(2)));
+			}
+			
+			statement.close();
+		} catch (SQLException e) {
+			Logs.severe("Error while retrieving records from database !");
+			e.printStackTrace();
+		}
+		return records;
+	}
 }

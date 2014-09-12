@@ -35,6 +35,7 @@ public enum Settings {
 	
 	CHALLENGES("Challenges", new ArrayList<String>()),
 	
+	TOP_COMPACT("TopCompact", true),
 	TOP_PER_PAGE("TopPerPage", 10),
 	TOP_FOOTNOTE_COLOR("Top.FootnoteColor", "&7"),
     TOP_PLACE_COLUMN_HEADER("Top.Place.Header", "&6Place"),

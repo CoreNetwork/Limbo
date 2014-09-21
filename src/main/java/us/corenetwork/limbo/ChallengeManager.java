@@ -51,6 +51,7 @@ public class ChallengeManager {
 		Prisoner prisoner = Prisoners.getPrisoner(player);
 		long duration = Util.currentTime() - prisoner.challengeStartTime;
 		Record bestRecord = LimboIO.getBestRecord(challenge);
+		Record bestRecordSelf = LimboIO.getBestRecord(challenge, player);
 		
 		LimboIO.insertRecord(new Record(player.getUniqueId().toString(), challenge, duration));
 		updateChallenge(player, "", 0);
@@ -65,6 +66,15 @@ public class ChallengeManager {
 			{
 				Util.Broadcast(msg.replace("<Player>", player.getName()).replace("<PreviousPlayer>", prevBestPlayer.getName()).replace("<DetailedTime>",  
 						Util.getDetailedTimeMessage(duration)).replace("<PreviousDetailedTime>",  Util.getDetailedTimeMessage(bestRecord.duration)));
+			}
+		}
+		else if(bestRecordSelf != null && bestRecordSelf.duration > duration)
+		{
+			List<String> msgList = chMap.get(challenge).getStringList("VictoryPersonalBest");
+			for(String msg : msgList)
+			{
+				Util.Broadcast(msg.replace("<Player>", player.getName()).replace("<DetailedTime>",  
+						Util.getDetailedTimeMessage(duration)).replace("<PreviousDetailedTime>",  Util.getDetailedTimeMessage(bestRecordSelf.duration)));
 			}
 		}
 		else

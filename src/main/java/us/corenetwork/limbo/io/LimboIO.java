@@ -201,6 +201,34 @@ public class LimboIO {
 		return record;
 	}
 	
+
+
+	public static Record getBestRecord(String challenge, Player player)
+	{
+		Record record = null;
+		
+		try 
+		{
+			Connection conn = IO.getConnection();
+			
+			PreparedStatement statement = conn.prepareStatement("SELECT UUID, Challenge, Duration  FROM records WHERE Challenge = ? AND UUID = ? ORDER BY Duration ASC LIMIT 1");
+			statement.setString(1, challenge);
+			statement.setString(2, player.getUniqueId().toString());
+			ResultSet rs = statement.executeQuery();
+			if(rs.next())
+			{
+				record = new Record(rs.getString(1), rs.getString(2), rs.getLong(3));
+			}
+			
+			statement.close();
+		} catch (SQLException e) {
+			Logs.severe("Error while retrieveing best record from database !");
+			e.printStackTrace();
+		}
+		
+		return record;
+	}
+	
 	public static List<Record> getRecords(String challenge, Player player, int offset, int limit)
 	{
 		List<Record> records = new ArrayList<Record>();
@@ -343,5 +371,6 @@ public class LimboIO {
 			e.printStackTrace();
 		}
 	}
+
 	
 }

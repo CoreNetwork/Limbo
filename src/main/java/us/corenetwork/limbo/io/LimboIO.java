@@ -306,7 +306,7 @@ public class LimboIO {
 		{
 			Connection conn = IO.getConnection();
 			PreparedStatement statement;
-			statement = conn.prepareStatement("SELECT uuid, MIN(duration) FROM records WHERE challenge = ? GROUP BY uuid ORDER BY duration ASC limit ?, ?");
+			statement = conn.prepareStatement("SELECT uuid, MIN(duration) FROM records WHERE challenge = ? GROUP BY uuid ORDER BY MIN(duration) ASC limit ?, ?");
 			statement.setString(1, challenge);
 			statement.setInt(2, offset);
 			statement.setInt(3, limit);

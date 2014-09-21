@@ -18,6 +18,7 @@ import us.corenetwork.limbo.commands.LimboHelpCommand;
 import us.corenetwork.limbo.commands.NotifyCommand;
 import us.corenetwork.limbo.commands.ReleaseCommand;
 import us.corenetwork.limbo.commands.ReloadCommand;
+import us.corenetwork.limbo.commands.ResetCommand;
 import us.corenetwork.limbo.commands.StatsCommand;
 import us.corenetwork.limbo.commands.StatusCommand;
 import us.corenetwork.limbo.commands.TopCommand;
@@ -50,6 +51,7 @@ public class LimboPlugin extends JavaPlugin {
 		limboCommands.put("stats", new StatsCommand());
 		limboCommands.put("top", new TopCommand());
 		limboCommands.put("notify", new NotifyCommand());
+		limboCommands.put("reset", new ResetCommand());
 		
 		
 		

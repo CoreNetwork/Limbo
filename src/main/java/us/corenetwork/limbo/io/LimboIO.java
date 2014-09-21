@@ -324,4 +324,24 @@ public class LimboIO {
 		}
 		return records;
 	}
+	
+	public static void resetChallenge(String challenge)
+	{
+		try 
+		{
+			Connection conn = IO.getConnection();
+			PreparedStatement statement;
+			statement = conn.prepareStatement("DELETE FROM records WHERE challenge = ?");
+			statement.setString(1, challenge);
+			
+			statement.executeUpdate();
+			statement.close();
+			
+			conn.commit();
+		} catch (SQLException e) {
+			Logs.severe("Error while deleting challenge records from database !");
+			e.printStackTrace();
+		}
+	}
+	
 }

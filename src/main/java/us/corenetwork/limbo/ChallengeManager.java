@@ -109,4 +109,5 @@ public class ChallengeManager {
 	{
 		return chMap.get(challenge).getStringList("CommandsOnExit");
 	}
+
 }

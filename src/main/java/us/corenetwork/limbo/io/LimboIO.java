@@ -102,7 +102,7 @@ public class LimboIO {
 			statement.setString(6, prisoner.challenge);
 			statement.setLong(7, prisoner.challengeStartTime);
 			statement.setBoolean(8, prisoner.notify);
-			
+
 			statement.execute();
 			statement.close();
 			conn.commit();
@@ -130,7 +130,7 @@ public class LimboIO {
 			statement.setBoolean(7, prisoner.notify);
 			
 			statement.execute();
-			statement.close();
+			statement.close();	
 			conn.commit();
 		} catch (SQLException e) {
 			Logs.severe("Error while saving prisoner from database !");

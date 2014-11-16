@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import us.corenetwork.limbo.LimboPlugin;
+import us.corenetwork.limbo.Settings;
 import us.corenetwork.limbo.Util;
 
 public class LimboHelpCommand extends BaseLimboCommand {
@@ -27,7 +28,8 @@ public class LimboHelpCommand extends BaseLimboCommand {
 
 		for (Entry<String, AbstractLimboCommand> e : LimboPlugin.limboCommands.entrySet())
 		{
-			descriptions.add("&a/" + "lim" + " " + e.getKey() + " &8-&f " + e.getValue().desc);
+			descriptions.add(Settings.getCommandDescription(e.getKey(), "lim", e.getValue().desc));
+			//descriptions.add("&a/" + "lim" + " " + e.getKey() + " &8-&f " + e.getValue().desc);
 		}  		
 		String[] descArray = descriptions.toArray(new String[0]);
 		Arrays.sort(descArray);

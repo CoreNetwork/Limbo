@@ -128,4 +128,20 @@ public enum Settings {
 	{
 		return IO.config.getIntegerList(name);
 	}
+	
+	public static String getCommandDescription(String cmd, String type, String def)
+	{
+		String path = "CommandDescriptions." + type + "." + cmd;
+		
+		Object descO = IO.config.get(path);
+		if (descO == null)
+		{
+			IO.config.set(path, "&a/" + type + " " + cmd + " &8-&f " + def);
+			IO.saveConfig();
+			descO = IO.config.get(path);
+		}
+		
+		return (String) descO;
+		
+	}
 }

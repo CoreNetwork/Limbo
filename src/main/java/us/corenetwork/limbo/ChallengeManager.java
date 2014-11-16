@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import us.corenetwork.limbo.io.IO;
@@ -59,7 +60,7 @@ public class ChallengeManager {
 		
 		if(bestRecord != null && bestRecord.duration > duration)
 		{
-			Player prevBestPlayer = LimboPlugin.instance.getServer().getPlayer(UUID.fromString(bestRecord.uuid));
+			OfflinePlayer prevBestPlayer = LimboPlugin.instance.getServer().getOfflinePlayer(UUID.fromString(bestRecord.uuid));
 			
 			List<String> msgList = chMap.get(challenge).getStringList("VictoryRecord");
 			for(String msg : msgList)

@@ -20,7 +20,13 @@ public class ChallengeManager {
 	public static void reloadChMap()
 	{
 		ConfigurationSection chSection = IO.config.getConfigurationSection("Challenges");
+
 		chMap = new HashMap<String, ConfigurationSection>();
+		if(chSection == null)
+		{
+			Logs.warning("No challenges defined in config!");
+			return;
+		}
 		for(String key : chSection.getKeys(false))
 		{
 			chMap.put(key.toLowerCase(), chSection.getConfigurationSection(key));

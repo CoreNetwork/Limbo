@@ -8,27 +8,26 @@ public class Logs
 	public static void debug(String text)
 	{
 		if (Settings.DEBUG.bool())
-			info(text);
+			sendLog("&f[&aLimbo&f]&5|&f "+text);
 	}
-
-    public static void debugIngame(String text)
-    {
-        if (Settings.DEBUG.bool())
-            Bukkit.broadcastMessage(text);
-    }
 	
 	public static void info(String text)
 	{
-		Bukkit.getLogger().info(ChatColor.GOLD + "[Limbo] " + ChatColor.GRAY + text);
+		sendLog("&f[&aLimbo&f]|&f "+text);
 	}
 	
 	public static void warning(String text)
 	{
-		Bukkit.getLogger().warning(ChatColor.GOLD + "[Limbo] " + ChatColor.GRAY + text);
+		sendLog("&f[&aLimbo&f]&c|&f "+text);
 	}
 	
 	public static void severe(String text)
 	{
-		Bukkit.getLogger().severe(ChatColor.GOLD + "[Limbo] " + ChatColor.GRAY + text);
+		sendLog("&f[&aLimbo&f]&4|&f "+text);
+	}
+	
+	public static void sendLog(String text)
+	{
+		Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', text));
 	}
 }

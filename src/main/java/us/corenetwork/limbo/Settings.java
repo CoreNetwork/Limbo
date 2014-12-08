@@ -11,6 +11,8 @@ public enum Settings {
 	DEFAULT_DURATION("DefaultDuration", "60m"),
 	NOTIFICATION_TIMES_LEFT("NotificationTimesLeft", new Integer[]{50, 40, 30, 20, 10, 5, 4, 3, 2, 1}),
 	
+	DEATH_MESSAGE_COLOR("DeathMessageColor", "&c"),
+	
 	COMMANDS_ON_ENTRY("Limbo.CommandsOnEntry", new ArrayList<String>(){{
 		add("rspawn unprotect silent");
 		add("mantle hydration restore'");
@@ -35,6 +37,7 @@ public enum Settings {
 	
 	CHALLENGES("Challenges", new ArrayList<String>()),
 	
+	
 	TOP_COMPACT("TopCompact", true),
 	TOP_PER_PAGE("TopPerPage", 10),
 	TOP_FOOTNOTE_COLOR("Top.FootnoteColor", "&7"),
@@ -49,6 +52,8 @@ public enum Settings {
     TOP_NAME_COLUMN_HEADER("Top.Name.Header", "&rName"),
     TOP_NAME_COLUMN_DISPLAY("Top.Name.Display", "<Player>"),
     TOP_NAME_COLUMN_COLOR("Top.Name.Color", "&r"),
+    
+    MESSAGE_SUICIDE("Messages.Suicide", "<Player> went straight to Limbo"),
     
 	MESSAGE_CHECK_SELF("Messages.CheckSelf", "&bYou will stay in Limbo for <Time>"),
 	MESSAGE_CHECK_PLAYER("Messages.CheckPlayer", "&6<Player> is in Limbo, <Time> left"),

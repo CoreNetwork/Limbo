@@ -22,6 +22,10 @@ public class DeathListener implements Listener {
 	@EventHandler
 	public void onPlayerCommandPreprocessEvent(PlayerCommandPreprocessEvent event)
 	{
+		if(event.getPlayer().getWorld().getEnvironment() == Environment.THE_END)
+		{
+			return;
+		}
 		Player player = event.getPlayer();
 		String message = event.getMessage();
 		String[] arr = message.split(" ");
@@ -66,7 +70,6 @@ public class DeathListener implements Listener {
 		}
 		else
 		{
-			
 			event.setDeathMessage(null);
 		}
 	}

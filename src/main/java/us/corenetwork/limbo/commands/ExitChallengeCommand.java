@@ -7,6 +7,7 @@ import us.corenetwork.limbo.LimboManager;
 import us.corenetwork.limbo.LimboPlugin;
 import us.corenetwork.limbo.PrisonerStatus;
 import us.corenetwork.limbo.Util;
+import us.corenetwork.limbo.io.Prisoners;
 
 public class ExitChallengeCommand extends BaseLimboCommand{
 	
@@ -20,9 +21,9 @@ public class ExitChallengeCommand extends BaseLimboCommand{
 	@Override
 	public void run(CommandSender sender, String[] args)
 	{
-		if(args.length != 2)
+		if(args.length != 1)
 		{
-			Util.Message("Usage: /lim exit <player> <challenge>", sender);
+			Util.Message("Usage: /lim exit <player>", sender);
 			return;
 		}
 	
@@ -40,26 +41,12 @@ public class ExitChallengeCommand extends BaseLimboCommand{
 			Util.Message("You cannot leave the challenge outside of Limbo", sender);
 			return;
 		}
-		
-		
-		String challenge = args[1].toLowerCase();
-		
-		if(ChallengeManager.challengeExists(challenge))
+
+		String challengeOfAPlayer = ChallengeManager.getChallange(player);
+
+		if(!(challengeOfAPlayer == null || challengeOfAPlayer.equals("")))
 		{
-			if(ChallengeManager.isPlayerTakingPartIn(player, challenge)) 
-			{
-				ChallengeManager.exitChallenge(player, challenge);
-			}
-			else
-			{
-				Util.Message("You cannot leave a challenge you don't take part in!", sender);
-				return;
-			}
-		}
-		else
-		{
-			Util.Message("Specified challenge doesn't exist in config!", sender);
-			return;
+			ChallengeManager.exitChallenge(player, challengeOfAPlayer);
 		}
 	}
 }

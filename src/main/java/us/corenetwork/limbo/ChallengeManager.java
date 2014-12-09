@@ -108,7 +108,12 @@ public class ChallengeManager {
 			return false;
 		return true;
 	}
-	
+
+	public static String getChallange(Player player)
+	{
+		return Prisoners.getPrisoner(player).challenge;
+	}
+
 	public static boolean challengeExists(String challenge)
 	{
 		return chMap.get(challenge) != null;

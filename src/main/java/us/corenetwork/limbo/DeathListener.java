@@ -43,6 +43,12 @@ public class DeathListener implements Listener {
 		Environment env = player.getWorld().getEnvironment();
 		String deathMessage = event.getDeathMessage();
 		Logs.debug(deathMessage);
+		
+		if(Settings.CLEAR_ITEMS_ON_DEATH.bool())
+		{
+			event.getDrops().clear();
+		}
+		
 		if(env != Environment.THE_END)
 		{
 			if(LimboManager.getPrisonerStatus(player) == PrisonerStatus.OUTSIDE && shouldGoToLimbo(player))
@@ -60,11 +66,8 @@ public class DeathListener implements Listener {
 				
 				deathMessage = ChatColor.translateAlternateColorCodes('&', Settings.DEATH_MESSAGE_COLOR.string() + strippedDeathMessage);
 				
-				
 				Util.Broadcast(deathMessage);
 				Logs.sendLog(deathMessage);
-				
-				//event.setDeathMessage(ChatColor.translateAlternateColorCodes('&', Settings.DEATH_MESSAGE_COLOR.string() + strippedDeathMessage));
 				event.setDeathMessage(null);
 			}
 		}

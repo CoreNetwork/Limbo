@@ -11,6 +11,8 @@ public enum Settings {
 	DEFAULT_DURATION("DefaultDuration", "60m"),
 	NOTIFICATION_TIMES_LEFT("NotificationTimesLeft", new Integer[]{50, 40, 30, 20, 10, 5, 4, 3, 2, 1}),
 	
+	CLEAR_ITEMS_ON_DEATH("ClearItemsOnDeath", true),
+	
 	DEATH_MESSAGE_COLOR("DeathMessageColor", "&c"),
 	
 	COMMANDS_ON_ENTRY("Limbo.CommandsOnEntry", new ArrayList<String>(){{

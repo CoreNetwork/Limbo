@@ -18,7 +18,8 @@ import us.corenetwork.limbo.io.LimboIO;
 public class DeathListener implements Listener {
 
 	private final String MOD_GROUP = "Overseer";
-	private List<Player> suiciders = new ArrayList<Player>();
+	//static just to be on the safe side.
+	private static List<Player> suiciders = new ArrayList<Player>();
 	@EventHandler
 	public void onPlayerCommandPreprocessEvent(PlayerCommandPreprocessEvent event)
 	{
@@ -36,7 +37,7 @@ public class DeathListener implements Listener {
 		}
 	}
 	
-	@EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
+	@EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
 	public void onPlayerDeathEvent(PlayerDeathEvent event)
 	{
 		Player player = event.getEntity();

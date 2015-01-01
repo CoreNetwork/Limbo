@@ -3,6 +3,7 @@ package us.corenetwork.limbo;
 import java.util.ArrayList;
 import java.util.List;
 import org.bukkit.ChatColor;
+import org.bukkit.Statistic;
 import org.bukkit.World.Environment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,6 +13,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.event.player.PlayerStatisticIncrementEvent;
 import us.corenetwork.limbo.io.Death;
 import us.corenetwork.limbo.io.LimboIO;
 
@@ -145,4 +147,17 @@ public class DeathListener implements Listener {
 		}
 		
 	}
+
+	@EventHandler(ignoreCancelled = true, priority = EventPriority.NORMAL)
+	public void onPlayerStatisticIncrementEvent(PlayerStatisticIncrementEvent event)
+	{
+		if(event.getStatistic() == Statistic.DEATHS)
+		{
+			if(event.getPlayer().getWorld().getEnvironment() == Environment.THE_END)
+			{
+				event.setCancelled(true);
+			}
+		}
+	}
+
 }

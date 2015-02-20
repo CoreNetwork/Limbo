@@ -1,5 +1,6 @@
 package us.corenetwork.limbo;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,6 +8,7 @@ import java.util.UUID;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
+import us.corenetwork.limbo.io.Death;
 import us.corenetwork.limbo.io.IO;
 import us.corenetwork.limbo.io.LimboIO;
 import us.corenetwork.limbo.io.Prisoner;
@@ -63,6 +65,8 @@ public class ChallengeManager {
 		LimboIO.insertRecord(new Record(player.getUniqueId().toString(), challenge, duration));
 		updateChallenge(player, "", 0);
 
+		//Add experience based on time spent
+		rewardExperience(player, prisoner, challenge, duration);
 		
 		if(bestRecord != null && bestRecord.duration > duration)
 		{
@@ -89,7 +93,30 @@ public class ChallengeManager {
 			Util.Broadcast(chMap.get(challenge).getString("Victory").replace("<Player>", player.getName()).replace("<DetailedTime>",  Util.getDetailedTimeMessage(duration)));
 		}
 	}
-	
+
+	private static void rewardExperience(final Player player, Prisoner prisoner, String challenge, long durationInMilis)
+	{
+		double timeItTook = durationInMilis/1000.0/60;
+		List<?> expBackList = chMap.get(challenge).getList("ExperienceRewardedBack", new ArrayList());
+
+		double mult = 0;
+
+		for(Object o : expBackList )
+		{
+			Map<String, Double> map = (HashMap) o;
+			Logs.debug(map.get("TimeUnderMinutes") + " " + timeItTook);
+			if(map.get("TimeUnderMinutes") > timeItTook)
+			{
+				mult = map.get("ExpBack");
+				break;
+			}
+		}
+
+		player.setExp(0);
+		player.setLevel(0);
+		player.giveExp((int)(prisoner.expOnDeath * (float)mult));
+	}
+
 	public static boolean isPlayerTakingPartIn(Player player, String challenge)
 	{
 		String dbCh = Prisoners.getPrisoner(player).challenge;

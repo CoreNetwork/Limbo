@@ -15,10 +15,11 @@ public class Prisoner {
 	public String challenge;
 	public long challengeStartTime;
 	public boolean notify;
+	public float expOnDeath;
 	
 	public List<Integer> notificationTimes;
 	
-	public Prisoner(String uuid, long startTime, long duration, boolean toRelease, boolean spawnedOnce, String challenge, long challengeStartTime, boolean notify)
+	public Prisoner(String uuid, long startTime, long duration, boolean toRelease, boolean spawnedOnce, String challenge, long challengeStartTime, boolean notify, float expOnDeath)
 	{
 		this.uuid = uuid;
 		this.startTime = startTime;
@@ -28,6 +29,7 @@ public class Prisoner {
 		this.challenge = challenge;
 		this.challengeStartTime = challengeStartTime;
 		this.notify = notify;
+		this.expOnDeath = expOnDeath;
 		
 		initializeNotifications();
 	}

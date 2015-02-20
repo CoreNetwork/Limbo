@@ -13,13 +13,13 @@ public class LimboManager {
 	
 	public static void imprison(Player player, boolean skipFirstRespawn)
 	{
-		Prisoner prisoner = new Prisoner(player.getUniqueId().toString(), Util.currentTime(), Util.parseTimeToMilis(Settings.DEFAULT_DURATION.string()), false, skipFirstRespawn, null, 0, true);
+		Prisoner prisoner = new Prisoner(player.getUniqueId().toString(), Util.currentTime(), Util.parseTimeToMilis(Settings.DEFAULT_DURATION.string()), false, skipFirstRespawn, null, 0, true, calculateTotalExp(player));
 		Prisoners.add(prisoner);
 	}
 	
 	public static void moveIn(final Player player)
 	{
-		Util.RunCommands(Util.PrepareCommands(Settings.COMMANDS_ON_ENTRY.stringList(), new HashMap<String, String>(){{put("<Player>", player.getName());}}));
+ 		Util.RunCommands(Util.PrepareCommands(Settings.COMMANDS_ON_ENTRY.stringList(), new HashMap<String, String>(){{put("<Player>", player.getName());}}));
 		List<String> msgList = Settings.MESSAGE_ENTRY.stringList();
 		Death death = LimboIO.getLastDeath(player);
 		
@@ -106,6 +106,28 @@ public class LimboManager {
 			if(ticksLeft < 0)
 				ticksLeft = 0;
 			return ticksLeft;
+		}
+	}
+
+	//Mainly because I dont trust the getTotalExperience method
+	private static float calculateTotalExp(Player player)
+	{
+		return player.getExp() + levelToTotalExp(player.getLevel());
+	}
+
+	private static float levelToTotalExp(int level)
+	{
+		if(level < 16)
+		{
+			return level*level + 6*level;
+		}
+		else if (level < 31)
+		{
+			return 2.5F*level*level  - 40.5F*level + 360;
+		}
+		else
+		{
+			return 4.5F*level*level  - 162.5F*level + 2220;
 		}
 	}
 

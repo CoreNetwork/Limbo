@@ -40,7 +40,7 @@ public class LimboManager {
 			Util.Message(msg.replace("<Time>", Util.getSimpleTimeMessage(LimboManager.getMilisLeft(player))).replace("<Death>", death.deathMessage), player);
 		}
 		
-	}3
+	}
 	
 	public static void release(Player player)
 	{

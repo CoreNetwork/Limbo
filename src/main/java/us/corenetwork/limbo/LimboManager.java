@@ -1,5 +1,6 @@
 package us.corenetwork.limbo;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -31,15 +32,25 @@ public class LimboManager {
 
 	public static void moveIn(final Player player)
 	{
- 		Util.RunCommands(Util.PrepareCommands(Settings.COMMANDS_ON_ENTRY.stringList(), new HashMap<String, String>(){{put("<Player>", player.getName());}}));
-		List<String> msgList = Settings.MESSAGE_ENTRY.stringList();
+		//Feature, first death = different set of commands
+
+		List<String> msgList;
+		if(player.getStatistic(Statistic.DEATHS) == 1)
+		{
+			Util.RunCommands(Util.PrepareCommands(Settings.COMMANDS_ON_ENTRY_FIRST.stringList(), new HashMap<String, String>(){{put("<Player>", player.getName());}}));
+			msgList = Settings.MESSAGE_ENTRY_FIRST.stringList();
+		}
+		else
+		{
+			Util.RunCommands(Util.PrepareCommands(Settings.COMMANDS_ON_ENTRY.stringList(), new HashMap<String, String>(){{put("<Player>", player.getName());}}));
+			msgList = Settings.MESSAGE_ENTRY.stringList();
+		}
+
 		Death death = LimboIO.getLastDeath(player);
-		
 		for(String msg : msgList)
 		{
 			Util.Message(msg.replace("<Time>", Util.getSimpleTimeMessage(LimboManager.getMilisLeft(player))).replace("<Death>", death.deathMessage), player);
 		}
-		
 	}
 	
 	public static void release(Player player)

@@ -31,6 +31,15 @@ public enum Settings {
 		add("runalias /limbogear <Player>");
 		add("warp limbo-library silent");
 	}}),
+	COMMANDS_ON_ENTRY_FIRST("Limbo.CommandsOnEntryFirst", new ArrayList<String>(){{
+		add("rspawn unprotect silent");
+		add("mantle hydration restore'");
+		add("clear <Player> silent");
+		add("core effect <Player> clear silent");
+		add("heal <Player>");
+		add("runalias /limbogear <Player>");
+		add("warp limbo-library silent");
+	}}),
 	COMMANDS_ON_RESPAWN("Limbo.CommandsOnRespawn", new ArrayList<String>(){{
 		add("runalias /limbogear <Player>");
 		add("warp limbo-library silent");
@@ -73,6 +82,8 @@ public enum Settings {
 	MESSAGE_TIME_DETAILED("Messages.DetailedTimeSyntax", "<Minutes>m <Seconds>s"),
 	
 	MESSAGE_ENTRY("Messages.Entry", new ArrayList<String>(){{add("&bYour death erased your corporeal form and all possessions. &7You will linger in &fLimbo &7for &f<Time>&7.");
+	}}),
+	MESSAGE_ENTRY_FIRST("Messages.EntryFirst", new ArrayList<String>(){{add("&bYour death erased your corporeal form and all possessions. &7You will linger in &fLimbo &7for &f<Time>&7.");
 	}}),
 	MESSAGE_EXIT("Messages.Exit", "&bYou have been released from Limbo."),
 	MESSAGE_DEATH_RESPAWN("Messages.DeathRespawn", "&bYour incorporeal form cannot be damaged."),

@@ -8,7 +8,14 @@ public enum Settings {
 
 	DEBUG("Debug", false),
 	
-	DEFAULT_DURATION("DefaultDuration", "60m"),
+	DEFAULT_DURATION("DefaultDuration",  new ArrayList<String>(){{
+		add("10m");
+		add("15m");
+		add("20m");
+		add("30m");
+		add("45m");
+		add("60m");
+	}}),
 	NOTIFICATION_TIMES_LEFT("NotificationTimesLeft", new Integer[]{50, 40, 30, 20, 10, 5, 4, 3, 2, 1}),
 	
 	CLEAR_ITEMS_ON_DEATH("ClearItemsOnDeath", true),

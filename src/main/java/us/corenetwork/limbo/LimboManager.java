@@ -2,6 +2,8 @@ package us.corenetwork.limbo;
 
 import java.util.HashMap;
 import java.util.List;
+
+import org.bukkit.Statistic;
 import org.bukkit.entity.Player;
 import us.corenetwork.limbo.io.Death;
 import us.corenetwork.limbo.io.LimboIO;
@@ -13,10 +15,20 @@ public class LimboManager {
 	
 	public static void imprison(Player player, boolean skipFirstRespawn)
 	{
-		Prisoner prisoner = new Prisoner(player.getUniqueId().toString(), Util.currentTime(), Util.parseTimeToMilis(Settings.DEFAULT_DURATION.string()), false, skipFirstRespawn, null, 0, true, calculateTotalExp(player));
+		Long duration = Util.parseTimeToMilis(getDurationBasedOnAmountOfDeaths(player));
+
+		Prisoner prisoner = new Prisoner(player.getUniqueId().toString(), Util.currentTime(), duration, false, skipFirstRespawn, null, 0, true, calculateTotalExp(player));
 		Prisoners.add(prisoner);
 	}
-	
+
+	private static String getDurationBasedOnAmountOfDeaths(Player player)
+	{
+		int amountOfDeaths = player.getStatistic(Statistic.DEATHS);
+
+		List<String> durations = Settings.DEFAULT_DURATION.stringList();
+		return amountOfDeaths >= durations.size() ? durations.get(durations.size()-1) : durations.get(amountOfDeaths);
+	}
+
 	public static void moveIn(final Player player)
 	{
  		Util.RunCommands(Util.PrepareCommands(Settings.COMMANDS_ON_ENTRY.stringList(), new HashMap<String, String>(){{put("<Player>", player.getName());}}));
@@ -28,7 +40,7 @@ public class LimboManager {
 			Util.Message(msg.replace("<Time>", Util.getSimpleTimeMessage(LimboManager.getMilisLeft(player))).replace("<Death>", death.deathMessage), player);
 		}
 		
-	}
+	}3
 	
 	public static void release(Player player)
 	{

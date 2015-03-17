@@ -37,5 +37,7 @@ public class Prisoner {
 	private void initializeNotifications()
 	{
 		notificationTimes = Settings.NOTIFICATION_TIMES_LEFT.intList();
+		int durationInMin = (int) (duration / 1000 / 60);
+		notificationTimes.remove(new Integer(durationInMin));
 	}
 }

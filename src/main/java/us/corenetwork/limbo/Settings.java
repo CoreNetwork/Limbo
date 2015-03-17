@@ -31,7 +31,7 @@ public enum Settings {
 		add("runalias /limbogear <Player>");
 		add("warp limbo-library silent");
 	}}),
-	COMMANDS_ON_ENTRY_FIRST("Limbo.CommandsOnEntryFirst", new ArrayList<String>(){{
+	COMMANDS_ON_ENTRY_TUTORIAL("Limbo.CommandsOnEntryTutorial", new ArrayList<String>(){{
 		add("rspawn unprotect silent");
 		add("mantle hydration restore'");
 		add("clear <Player> silent");
@@ -83,7 +83,7 @@ public enum Settings {
 	
 	MESSAGE_ENTRY("Messages.Entry", new ArrayList<String>(){{add("&bYour death erased your corporeal form and all possessions. &7You will linger in &fLimbo &7for &f<Time>&7.");
 	}}),
-	MESSAGE_ENTRY_FIRST("Messages.EntryFirst", new ArrayList<String>(){{add("&bYour death erased your corporeal form and all possessions. &7You will linger in &fLimbo &7for &f<Time>&7.");
+	MESSAGE_ENTRY_TUTORIAL("Messages.EntryTutorial", new ArrayList<String>(){{add("&bYour death erased your corporeal form and all possessions. &7You will linger in &fLimbo &7for &f<Time>&7.");
 	}}),
 	MESSAGE_EXIT("Messages.Exit", "&bYou have been released from Limbo."),
 	MESSAGE_DEATH_RESPAWN("Messages.DeathRespawn", "&bYour incorporeal form cannot be damaged."),
@@ -98,7 +98,13 @@ public enum Settings {
 	
 	MESSAGE_INCREASED("Messages.Increased", "<Player>'s stay has been extended by <Time>"),
 	MESSAGE_DECREASED("Messages.Decreased", "<Player>'s stay has been shortened by <Time>"),
-	
+
+	MESSAGE_TUTORIAL_COMPLETE_SELF("Messages.TutorialCompleteSelf", "You completed Limbo tutorial!"),
+	MESSAGE_TUTORIAL_RESET_SELF("Messages.TutorialResetSelf", "You restarted your Limbo tutorial."),
+
+	MESSAGE_TUTORIAL_COMPLETE("Messages.TutorialComplete", "<Player> completed Limbo tutorial."),
+	MESSAGE_TUTORIAL_RESET("Messages.TutorialReset", "<Player> Limbo tutorial has been restarted."),
+
 	MESSAGE_STATS("Messages.Stats", "Total : <Total>   Active : <Active>."),
 	
 	MESSAGE_NO_TOP("Messages.NoTop", "&cNobody finished this challenge yet!"),

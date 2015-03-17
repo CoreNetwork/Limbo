@@ -23,6 +23,7 @@ import us.corenetwork.limbo.commands.ResetCommand;
 import us.corenetwork.limbo.commands.StatsCommand;
 import us.corenetwork.limbo.commands.StatusCommand;
 import us.corenetwork.limbo.commands.TopCommand;
+import us.corenetwork.limbo.commands.TutorialCommand;
 import us.corenetwork.limbo.io.IO;
 import us.corenetwork.limbo.io.Prisoners;
 
@@ -54,6 +55,7 @@ public class LimboPlugin extends JavaPlugin {
 		limboCommands.put("notify", new NotifyCommand());
 		limboCommands.put("reset", new ResetCommand());
 		limboCommands.put("kill", new KillCommand());
+		limboCommands.put("tutorial", new TutorialCommand());
 		
 		
 		IO.LoadSettings();

@@ -311,7 +311,7 @@ public class LimboIO {
 			Connection conn = IO.getConnection();
 			PreparedStatement statement;
 			
-			statement = conn.prepareStatement("SELECT COUNT(distinct uuid)  FROM records WHERE Challenge = ?");
+			statement = conn.prepareStatement("SELECT COUNT(distinct uuid) FROM records WHERE Challenge = ?");
 			statement.setString(1, challenge);
 			
 			
@@ -376,6 +376,71 @@ public class LimboIO {
 			Logs.severe("Error while deleting challenge records from database !");
 			e.printStackTrace();
 		}
+	}
+
+	public static boolean getSeenTutorial(Player player)
+	{
+		try
+		{
+			Connection conn = IO.getConnection();
+			PreparedStatement statement;
+
+			statement = conn.prepareStatement("SELECT UUID FROM tutorial WHERE UUID = ?");
+			statement.setString(1, player.getUniqueId().toString());
+
+			ResultSet rs = statement.executeQuery();
+			if(rs.next())
+			{
+				return true;
+			}
+
+			statement.close();
+		} catch (SQLException e) {
+			Logs.severe("Error while retrieving tutorial record from database !");
+			e.printStackTrace();
+		}
+
+		return false;
+	}
+
+	public static void setSeenTutorial(Player player, boolean value)
+	{
+		if(!value)
+		{
+			try
+			{
+				Connection conn = IO.getConnection();
+
+				PreparedStatement statement = conn.prepareStatement("DELETE FROM tutorial WHERE UUID = ?");
+				statement.setString(1, player.getUniqueId().toString());
+				statement.execute();
+				statement.close();
+				conn.commit();
+			} catch (SQLException e)
+			{
+				Logs.severe("Error while removing tutorial record to the database !");
+				e.printStackTrace();
+			}
+		}
+		else if(!getSeenTutorial(player))
+		{
+			try
+			{
+				Connection conn = IO.getConnection();
+
+				PreparedStatement statement = conn.prepareStatement("INSERT INTO tutorial (UUID) VALUES (?)");
+
+				statement.setString(1, player.getUniqueId().toString());
+				statement.execute();
+				statement.close();
+				conn.commit();
+			} catch (SQLException e)
+			{
+				Logs.severe("Error while saving tutorial record to the database !");
+				e.printStackTrace();
+			}
+		}
+
 	}
 
 	

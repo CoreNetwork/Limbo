@@ -119,6 +119,9 @@ public class IO {
             		+ "Challenge STRING NOT NULL, "
             		+ "DURATION INTEGER"
             		+ ")");
+            st.executeUpdate("CREATE TABLE IF NOT EXISTS tutorial "
+                    + "(UUID STRING PRIMARY KEY"
+                    + ")");
             conn.commit();
             st.close();
         } catch (SQLException e) {

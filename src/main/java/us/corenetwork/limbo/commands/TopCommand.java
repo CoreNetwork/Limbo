@@ -2,6 +2,8 @@ package us.corenetwork.limbo.commands;
 
 import java.util.List;
 import java.util.UUID;
+
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import us.corenetwork.limbo.ChallengeManager;
@@ -36,7 +38,7 @@ public class TopCommand extends BaseLimboCommand {
 		
 		page = 1;
 		perPage = Settings.TOP_PER_PAGE.integer();
-		Player player = null;
+		OfflinePlayer player = null;
 		
 		String challenge = args[0].toLowerCase();
 		
@@ -54,7 +56,7 @@ public class TopCommand extends BaseLimboCommand {
 			}
 			else
 			{
-				player = LimboPlugin.instance.getServer().getPlayer(args[1]);
+				player = LimboPlugin.instance.getServer().getOfflinePlayer(args[1]);
 				if(player == null)
 				{
 					Util.Message("Could not find player called " + args[1], sender);
@@ -64,7 +66,7 @@ public class TopCommand extends BaseLimboCommand {
 		}
 		else if(args.length == 3)
 		{
-			player = LimboPlugin.instance.getServer().getPlayer(args[1]);
+			player = LimboPlugin.instance.getServer().getOfflinePlayer(args[1]);
 			if(player == null)
 			{
 				Util.Message("Could not find player called " + args[1], sender);
@@ -83,7 +85,7 @@ public class TopCommand extends BaseLimboCommand {
 		}
 		int countAll;
 		
-		if(player == null && Settings.TOP_COMPACT.bool() == true)
+		if(player == null && Settings.TOP_COMPACT.bool())
 		{
 			countAll = LimboIO.getDistinctCountFor(challenge);
 		}
@@ -115,7 +117,7 @@ public class TopCommand extends BaseLimboCommand {
 		offset = (page-1)*perPage;
 		
 		List<Record> records;
-		if(player == null && Settings.TOP_COMPACT.bool() == true)
+		if(player == null && Settings.TOP_COMPACT.bool())
 		{
 			records = LimboIO.getDistinctRecordsFor(challenge, offset, perPage);
 		}

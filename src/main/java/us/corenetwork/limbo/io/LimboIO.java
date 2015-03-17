@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import us.corenetwork.limbo.Logs;
 
@@ -230,7 +232,7 @@ public class LimboIO {
 		return record;
 	}
 	
-	public static List<Record> getRecords(String challenge, Player player, int offset, int limit)
+	public static List<Record> getRecords(String challenge, OfflinePlayer player, int offset, int limit)
 	{
 		List<Record> records = new ArrayList<Record>();
 		try 
@@ -267,7 +269,7 @@ public class LimboIO {
 		return records;
 	}
 	
-	public static int getRecordsCountFor(String challenge, Player player)
+	public static int getRecordsCountFor(String challenge, OfflinePlayer player)
 	{
 		int count = 0;
 		try 

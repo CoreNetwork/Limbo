@@ -50,14 +50,14 @@ public class TopCommand extends BaseLimboCommand {
 		
 		if(args.length == 2)
 		{
-			if(Util.isInteger(args[1]))
+			player = LimboPlugin.instance.getServer().getOfflinePlayer(args[1]);
+			if(player == null)
 			{
-				page = Integer.parseInt(args[1]);
-			}
-			else
-			{
-				player = LimboPlugin.instance.getServer().getOfflinePlayer(args[1]);
-				if(player == null)
+				if(Util.isInteger(args[1]))
+				{
+					page = Integer.parseInt(args[1]);
+				}
+				else
 				{
 					Util.Message("Could not find player called " + args[1], sender);
 					return;
@@ -165,8 +165,6 @@ public class TopCommand extends BaseLimboCommand {
 	
 	private String getTimeString(long duration)
 	{
-		
-		
 		long minutesLeft = duration / 1000 / 60;
 		long secondsLeft = (duration / 1000) % 60;
 	

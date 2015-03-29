@@ -3,8 +3,10 @@ package us.corenetwork.limbo.commands;
 import java.util.List;
 import java.util.UUID;
 
+import net.minecraft.server.v1_8_R1.UserCache;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
+import org.bukkit.craftbukkit.v1_8_R1.CraftServer;
 import org.bukkit.entity.Player;
 import us.corenetwork.limbo.ChallengeManager;
 import us.corenetwork.limbo.LimboPlugin;
@@ -50,7 +52,15 @@ public class TopCommand extends BaseLimboCommand {
 		
 		if(args.length == 2)
 		{
-			player = LimboPlugin.instance.getServer().getOfflinePlayer(args[1]);
+			CraftServer cs = (CraftServer)LimboPlugin.instance.getServer();
+			if(cs.getHandle().getServer().getUserCache().getProfile(args[1]) == null)
+			{
+				player = null;
+			}
+			else
+			{
+				player = LimboPlugin.instance.getServer().getOfflinePlayer(args[1]);
+			}
 			if(player == null)
 			{
 				if(Util.isInteger(args[1]))

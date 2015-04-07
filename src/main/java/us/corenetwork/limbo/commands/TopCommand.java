@@ -1,13 +1,10 @@
 package us.corenetwork.limbo.commands;
 
 import java.util.List;
-import java.util.UUID;
 
-import net.minecraft.server.v1_8_R1.UserCache;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
-import org.bukkit.craftbukkit.v1_8_R1.CraftServer;
-import org.bukkit.entity.Player;
+import org.bukkit.craftbukkit.v1_8_R2.CraftServer;
 import us.corenetwork.limbo.ChallengeManager;
 import us.corenetwork.limbo.LimboPlugin;
 import us.corenetwork.limbo.Settings;

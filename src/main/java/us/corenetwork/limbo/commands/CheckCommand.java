@@ -1,5 +1,6 @@
 package us.corenetwork.limbo.commands;
 
+import org.bukkit.OfflinePlayer;
 import org.bukkit.World.Environment;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -20,7 +21,7 @@ public class CheckCommand extends BaseLimboCommand{
 	@Override
 	public void run(CommandSender sender, String[] args)
 	{
-		Player player = null;
+		OfflinePlayer player = null;
 		if(args.length == 0)
 		{
 			if(sender instanceof Player)
@@ -42,7 +43,7 @@ public class CheckCommand extends BaseLimboCommand{
 		}
 		else
 		{
-			player = LimboPlugin.instance.getServer().getPlayer(args[0]);
+			player = LimboPlugin.instance.getServer().getOfflinePlayer(args[0]);
 			if(player == null)
 			{
 				Util.Message("Could not find player called " + args[0], sender);
@@ -57,10 +58,14 @@ public class CheckCommand extends BaseLimboCommand{
 		{
 		case OUTSIDE:
 			message = Settings.MESSAGE_CHECK_PLAYER_NEG.string();
-			
-			if(player.getWorld().getEnvironment() == Environment.THE_END)
+
+			if(player.isOnline())
 			{
-				LimboManager.runOutCommands(player, false);
+				Player onlinePlayer = player.getPlayer();
+				if (onlinePlayer.getWorld().getEnvironment() == Environment.THE_END)
+				{
+					LimboManager.runOutCommands(onlinePlayer, false);
+				}
 			}
 			break;
 		default:

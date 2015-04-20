@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import us.corenetwork.limbo.Logs;
 import us.corenetwork.limbo.PrisonerStatus;
@@ -43,7 +45,7 @@ public class Prisoners {
 		LimboIO.updatePrisoner(prisoner);
 	}
 	
-	public static Prisoner getPrisoner(Player player)
+	public static Prisoner getPrisoner(OfflinePlayer player)
 	{
 		return prisoners.get(player.getUniqueId().toString());
 	}

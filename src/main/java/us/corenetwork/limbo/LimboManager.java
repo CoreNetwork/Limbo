@@ -3,6 +3,7 @@ package us.corenetwork.limbo;
 import java.util.HashMap;
 import java.util.List;
 
+import org.bukkit.OfflinePlayer;
 import org.bukkit.Statistic;
 import org.bukkit.entity.Player;
 import us.corenetwork.limbo.io.Death;
@@ -114,13 +115,13 @@ public class LimboManager {
 		Prisoners.save(prisoner);
 	}
 	
-	public static PrisonerStatus getPrisonerStatus(Player player)
+	public static PrisonerStatus getPrisonerStatus(OfflinePlayer player)
 	{
 		Prisoner prisoner = Prisoners.getPrisoner(player);
 		return Prisoners.getStatus(prisoner);
 	}
 
-	public static long getMilisLeft(Player player)
+	public static long getMilisLeft(OfflinePlayer player)
 	{
 		Prisoner prisoner = Prisoners.getPrisoner(player);
 		if(prisoner == null)
